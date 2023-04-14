@@ -3,7 +3,6 @@
 
 #include "tile.h"
 #include "SDL_Plotter.h"
-//This is a test change.
 
 class Block{
 
