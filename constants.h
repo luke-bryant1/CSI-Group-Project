@@ -18,3 +18,4 @@ enum direction {north, east, south, west};
 
 
 #endif // CONSTANTS_H_INCLUDED
+//test
