@@ -12,7 +12,7 @@ class tile{
 
     public:
         tile(){
-            size = 20;
+            size = TILE_SIZE;
         }
 
         point getLocation() const;
@@ -22,11 +22,13 @@ class tile{
         void setLocation(const point&);
         void setColor(const color&);
         void setSize(int);
+        void update(SDL_Plotter& g);
 
         void draw(SDL_Plotter& g);
         void move();
         void moveLeft();
         void moveRight();
+        void moveDown();
 };
 
 #endif // TILE_H_INCLUDED
