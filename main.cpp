@@ -1,49 +1,45 @@
 #include <iostream>
 #include <cmath>
-#include "SDL_Plotter.h"
 #include "tile.h"
+#include "block.h"
+
 
 using namespace std;
 
-//void drawSquare(SDL_Plotter& g, int xOff = 0, int yOff = 0, //Default values are only in the prototype.
-//                int size = 25, int R = 0, int G = 0, int B = 0);
-//
-//void drawCircle(point loc, int size, color c, SDL_Plotter& g);
-
 int main(int argc, char ** argv)
 {
-
     SDL_Plotter g(NUM_ROW,NUM_COL); //These coordinates are the size of the window plotter
-    char keyl
+    char key;
     tile a;
-    a.setColor(RED);
-    a.setSize(g.getCol()/12);
-//    point p;
-//    color c;
-//    int size = 50;
-//    int xOff = 0, yOff = 0; //This will help plot the square in a certain location.
-//    int R, G, B;
-//    int speed = 0; //This changed the speed the square moves.
-//    int rate = 1; //This can change the direction of the falling square
-//    char key;
+    Block testBlock;
+    point loc;
 
-    while (!g.getQuit())
-    {
-//        drawSquare(g, 100, 100, size, 255, 255, 255); //This erases the object so it doesn't leave a trail.
+    loc.x = 250;
+    loc.y = 0;
+
+    testBlock.setLocation(loc);
+
+    while (!g.getQuit()){
 		if(g.kbhit()){
             key = g.getKey();
             switch(key){
-                case RIGHT_ARROW: a.moveRight();
+                case RIGHT_ARROW: testBlock.moveRight();
                                 break;
-                case LEFT_ARROW: a.moveLeft();
+                case LEFT_ARROW: testBlock.moveLeft();
                                 break;
-
+                case DOWN_ARROW: testBlock.moveDown();
+                                break;
+                case UP_ARROW: testBlock.switchType();
+                                break;
             }
 		}
-		a.move();
-		a.draw(g);
-		a.update();
-		g.Sleep(100); //This controls the speed that the block moves
+
+		testBlock.move();
+		testBlock.draw(g);
+		testBlock.update(g);
+		g.Sleep(SPEED);
+    }
+}
 
 //		    R = rand()%256; //This makes it a random color.
 //		    G = rand()%256;
@@ -59,16 +55,13 @@ int main(int argc, char ** argv)
 //                      rate *= -1;                      //when it hits the top and bottom.
 //            }
 
-
 //		for(int x = 0; x < size; x++){
 //            for(int y = 0; y < size; y++){
 //                g.plotPixel(x + xOff, y + yOff, 0, 0, 0); //This plots a point at (x + xOff, y + yOff)
 //                                                            with color black
-//		        g.update(); //This actually takes it from memory and draws it to the screen.
+//		        g.update();
 //            }
 //        }
-    }
-}
 
 
 void drawCircle(point loc, int size, color c, SDL_Plotter& g){
@@ -86,7 +79,7 @@ void drawSquare(SDL_Plotter& g, int xOff, int yOff,
                 int size, int R, int G, int B){
     for(int x = 0; x < size; x++){
         for(int y = 0; y < size; y++){
-            g.plotPixel(x + xOff, y + yOff, R, G, B)
+            g.plotPixel(x + xOff, y + yOff, R, G, B);
         }
     }
 
