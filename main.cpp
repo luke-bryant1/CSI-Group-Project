@@ -6,40 +6,41 @@
 
 using namespace std;
 
-int main(int argc, char ** argv)
-{
+int main(int argc, char ** argv){
     SDL_Plotter g(NUM_ROW,NUM_COL); //These coordinates are the size of the window plotter
     char key;
-    tile a;
-    Block testBlock;
-    point loc;
+    Block blockArray[NUM_OF_BLOCKS];
+    point startingLoc;
+    int i = 0; //"i" tells us which block we are currently moving and the zero puts us at the first block in the array to start
 
-    loc.x = 250;
-    loc.y = 0;
+    startingLoc.x = (NUM_ROW / 3); //This puts the first place the block is drawn at the top near the middle
+    startingLoc.y = 3 * TILE_SIZE; //This puts the block with enough room for the full block to be drawn
 
-    testBlock.setLocation(loc);
-
-    while (!g.getQuit()){
-		if(g.kbhit()){
-            key = g.getKey();
-            switch(key){
-                case RIGHT_ARROW: testBlock.moveRight();
-                                break;
-                case LEFT_ARROW: testBlock.moveLeft();
-                                break;
-                case DOWN_ARROW: testBlock.moveDown();
-                                break;
-                case UP_ARROW: testBlock.switchType();
-                                break;
+    while(i < NUM_OF_BLOCKS){
+        blockArray[i].setLocation(startingLoc);
+        while(blockArray[i].isMoving() && !g.getQuit()){
+            if(g.kbhit()){
+                key = g.getKey();
+                switch(key){
+                    case RIGHT_ARROW: blockArray[i].moveRight();
+                                    break;
+                    case LEFT_ARROW: blockArray[i].moveLeft();
+                                    break;
+                    case DOWN_ARROW: blockArray[i].moveDown();
+                                    break;
+                    case UP_ARROW: blockArray[i].rotate();
+                                    break;
+                }
             }
-		}
-
-		testBlock.move();
-		testBlock.draw(g);
-		testBlock.update(g);
-		g.Sleep(SPEED);
+            blockArray[i].move();
+            blockArray[i].draw(g);
+            blockArray[i].update(g);
+            g.Sleep(SPEED);
+        }
+    i++; //This moves us to the next block when the current block stops moving
     }
 }
+
 
 //		    R = rand()%256; //This makes it a random color.
 //		    G = rand()%256;
