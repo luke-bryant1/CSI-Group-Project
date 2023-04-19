@@ -9,7 +9,10 @@ class Block{
         point loc;
         color shade;
         blockType type;
+        direction orientation;
         int size;
+        bool isCurrentlyMoving;
+        bool isOnScreen;
 
     public:
         Block();
@@ -17,6 +20,8 @@ class Block{
         point getLocation() const;
         color getColor() const;
         int getSize() const;
+
+        bool isMoving() const;
 
         void setLocation(const point&);
         void setColor(const color&);
@@ -30,6 +35,7 @@ class Block{
         void moveLeft();
         void moveRight();
         void moveDown();
+        void rotate(); // This rotates blocks *clockwise*
 
 
 };
