@@ -131,7 +131,7 @@ void Block::setLocation(const point& a1){
 
                         break;
 
-                    case south:
+                    case east:
                         b1.x = a1.x;
                         b1.y = a1.y - size;
 
@@ -211,35 +211,33 @@ void Block::setLocation(const point& a1){
 
                 break;
 
-            case z_shape:
+            case z_shape://The z_shape only has two orientations as well
                 switch(orientation){
                     case north:
                         b1.x = a1.x + size;
-                        b1.y = a1.y;
+                        b1.y = a1.y - size;
 
-                        c1.x = a1.x + size;
+                        c1.x = a1.x;
                         c1.y = a1.y - size;
 
-                        d1.x = a1.x + 2 * size;
-                        d1.y = a1.y - size;
+                        d1.x = a1.x - size;
+                        d1.y = a1.y;
 
                         break;
 
                     case east:
+                        b1.x = a1.x + size;
+                        b1.y = a1.y;
 
+                        c1.x = a1.x + size;
+                        c1.y = a1.y + size;
 
-                        break;
-
-                    case south:
-
-
-                        break;
-
-                    case west:
-
+                        d1.x = a1.x;
+                        d1.y = a1.y - size;
 
                         break;
-                 }
+
+                }
 
                 break;
 
@@ -303,12 +301,12 @@ void Block::setLocation(const point& a1){
         data[3].setLocation(d1);
     }
     else{
-        isCurrentlyMoving = false;
+        isCurrentlyMoving = false; //this needs to be turned to false only when it hits the bottom or another tile.
     }
-    if((a1.x >= 0 && a1.y >= 0 && a1.x < NUM_COL - size && a1.y < NUM_ROW - size)&& // There are so many because it checks to make sure every single
-       (b1.x >= 0 && b1.y >= 0 && b1.x < NUM_COL - size && b1.y < NUM_ROW - size)&& // tile is not touching a wall. I still don't know how to make it
-       (c1.x >= 0 && c1.y >= 0 && c1.x < NUM_COL - size && c1.y < NUM_ROW - size)&& // not run into other tiles.
-       (d1.x >= 0 && d1.y >= 0 && d1.x < NUM_COL - size && d1.y < NUM_ROW - size)){
+    if((a1.x >= 0 && a1.x < NUM_COL - size && a1.y < NUM_ROW - size)&& // There are so many because it checks to make sure every single
+       (b1.x >= 0 && b1.x < NUM_COL - size && b1.y < NUM_ROW - size)&& // tile is not touching a wall. I still don't know how to make it
+       (c1.x >= 0 && c1.x < NUM_COL - size && c1.y < NUM_ROW - size)&& // not run into other tiles.
+       (d1.x >= 0 && d1.x < NUM_COL - size && d1.y < NUM_ROW - size)){
            isOnScreen = true;
        }
        else{
@@ -362,9 +360,9 @@ void Block::rotate(){
 
             switch(orientation){
                 case north:
-                    orientation = south;
+                    orientation = east;
                     break;
-                case south:
+                case east:
                     orientation = north;
                     break;
             }
@@ -401,12 +399,6 @@ void Block::rotate(){
                     orientation = east;
                     break;
                 case east:
-                    orientation = south;
-                    break;
-                case south:
-                    orientation = west;
-                    break;
-                case west:
                     orientation = north;
                     break;
             }
