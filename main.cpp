@@ -9,12 +9,13 @@ using namespace std;
 int main(int argc, char ** argv){
     SDL_Plotter g(NUM_ROW,NUM_COL); //These coordinates are the size of the window plotter
     char key;
-    Block blockArray[NUM_OF_BLOCKS];
+    Block blockArray[NUM_OF_BLOCKS]; //We need to put this in a different "tetris.cpp" file
     point startingLoc;
     int i = 0; //"i" tells us which block we are currently moving and the zero puts us at the first block in the array to start
 
     startingLoc.x = (NUM_ROW / 3); //This puts the first place the block is drawn at the top near the middle
-    startingLoc.y = 3 * TILE_SIZE; //This puts the block with enough room for the full block to be drawn
+    startingLoc.y = 4 * TILE_SIZE; //This puts the block with enough room for the full block to be drawn
+                                   // we need to put these things into the block constructor
 
     while(i < NUM_OF_BLOCKS){
         blockArray[i].setLocation(startingLoc);
