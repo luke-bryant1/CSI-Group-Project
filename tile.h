@@ -1,6 +1,7 @@
 #ifndef TILE_H_INCLUDED
 #define TILE_H_INCLUDED
 
+#include <cstdlib>
 #include "SDL_Plotter.h"
 #include "constants.h"
 
