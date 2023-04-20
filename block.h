@@ -5,7 +5,7 @@
 
 class Block{
     private:
-        tile data[NUM_TILES];
+        tile tileArray[NUM_TILES];
         point loc;
         color shade;
         blockType type;
@@ -24,6 +24,8 @@ class Block{
         bool isMoving() const;
 
         void setLocation(const point&);
+        void setOriginalX();
+        void setOriginalY();
         void setColor(const color&);
         void setSize(int);
         void setType(blockType);
@@ -36,6 +38,9 @@ class Block{
         void moveRight();
         void moveDown();
         void rotate(); // This rotates blocks *clockwise*
+        bool isTouching(Block[], int, int) const;
+        void stopMoving();
+        void stopIfHitBottom();
 
 
 };
