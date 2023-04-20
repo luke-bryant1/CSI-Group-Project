@@ -7,6 +7,9 @@ const int NUM_COL = 400;
 const int NUM_TILES     = 4;
 const int TILE_SIZE     = 25;
 const int NUM_OF_BLOCKS = 50;
+const int STARTING_X    = NUM_ROW / 3;
+const int STARTING_Y    = TILE_SIZE * 4;
+
 
 const int SPEED = 150; //This controls the speed that the block falls (the higher the number the slower)
 
@@ -20,6 +23,7 @@ const color BACKGROUND = color(255, 255, 255);
 
 enum blockType {bar, square, l_shape, t_shape, z_shape};
 enum direction {north, east, south, west};
+
 
 
 #endif // CONSTANTS_H_INCLUDED
