@@ -3,8 +3,10 @@
 Block::Block(){
     size = TILE_SIZE;
     isCurrentlyMoving = true;
-    orientation = north;
     isOnScreen = true;
+
+//    loc.x = -50;
+//    loc.y = -50;
 
     //*I think the randomizing functions need to be redone somehow using time. (Sometimes I get weird patterns with the blocks.)
     // I just forgot how to do that lol.
@@ -91,11 +93,11 @@ void Block::move(){
 }
 
 void Block::draw(SDL_Plotter& g){
-    if(isCurrentlyMoving){
-        data[0].draw(g);
-        data[1].draw(g);
-        data[2].draw(g);
-        data[3].draw(g);
+    if(isOnScreen && isCurrentlyMoving){
+        tileArray[0].draw(g);
+        tileArray[1].draw(g);
+        tileArray[2].draw(g);
+        tileArray[3].draw(g);
     }
 }
 
@@ -112,8 +114,7 @@ int Block::getSize() const{
 void Block::setLocation(const point& a1){
     point b1, c1, d1;
 
-     if(isOnScreen){
-        isCurrentlyMoving = true;
+     if(isOnScreen && isCurrentlyMoving){
         loc = a1;
 
         switch(type){
@@ -295,31 +296,35 @@ void Block::setLocation(const point& a1){
                 break;
         }
 
-        data[0].setLocation(a1);
-        data[1].setLocation(b1);
-        data[2].setLocation(c1);
-        data[3].setLocation(d1);
+        tileArray[0].setLocation(a1);
+        tileArray[1].setLocation(b1);
+        tileArray[2].setLocation(c1);
+        tileArray[3].setLocation(d1);
     }
-    else{
-        isCurrentlyMoving = false; //this needs to be turned to false only when it hits the bottom or another tile.
-    }
+
     if((a1.x >= 0 && a1.x < NUM_COL - size && a1.y < NUM_ROW - size)&& // There are so many because it checks to make sure every single
        (b1.x >= 0 && b1.x < NUM_COL - size && b1.y < NUM_ROW - size)&& // tile is not touching a wall. I still don't know how to make it
        (c1.x >= 0 && c1.x < NUM_COL - size && c1.y < NUM_ROW - size)&& // not run into other tiles.
        (d1.x >= 0 && d1.x < NUM_COL - size && d1.y < NUM_ROW - size)){
            isOnScreen = true;
        }
-       else{
+    else{
            isOnScreen = false;
        }
 
     return;
 }
+void Block::setOriginalX(){
+    loc.x = STARTING_X;
+}
+void Block::setOriginalY(){
+    loc.y = STARTING_Y;
+}
 void Block::setColor(const color& c){
-    data[0].setColor(c);
-    data[1].setColor(c);
-    data[2].setColor(c);
-    data[3].setColor(c);
+    tileArray[0].setColor(c);
+    tileArray[1].setColor(c);
+    tileArray[2].setColor(c);
+    tileArray[3].setColor(c);
     return;
 }
 void Block::setSize(int s){
@@ -429,3 +434,32 @@ void Block::rotate(){
 bool Block::isMoving() const{
     return isCurrentlyMoving;
 }
+
+bool Block::isTouching(Block blockArray[], int NUM_OF_BLOCKS, int m) const{
+    bool collide = false;
+    for(int i = 0; i < NUM_OF_BLOCKS; i++){
+        for(int j = 0; j < NUM_TILES; j++){
+            for(int k = 0; k < NUM_TILES; k++){
+                if(m!=i && blockArray[i].tileArray[j].getLocation().x == tileArray[k].getLocation().x
+                        && blockArray[i].tileArray[j].getLocation().y == tileArray[k].getLocation().y  + TILE_SIZE ){
+                    collide = true;
+                }
+            }
+        }
+    }
+    return collide; //returns true if tiles are touching
+}
+
+void Block::stopMoving(){
+    isCurrentlyMoving = false;
+}
+
+void Block::stopIfHitBottom(){
+    if((tileArray[0].getLocation().y == NUM_ROW - size)&&
+       (tileArray[1].getLocation().y == NUM_ROW - size)&&
+       (tileArray[2].getLocation().y == NUM_ROW - size)&&
+       (tileArray[3].getLocation().y == NUM_ROW - size)){
+            stopMoving();
+       }
+}
+
