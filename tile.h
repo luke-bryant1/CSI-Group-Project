@@ -1,7 +1,6 @@
 #ifndef TILE_H_INCLUDED
 #define TILE_H_INCLUDED
 
-#include <cstdlib>
 #include "SDL_Plotter.h"
 #include "constants.h"
 
@@ -10,6 +9,8 @@ class tile{
         point loc, prevLoc;   //"loc" is for the location
         color shade; // "shade" is for the color
         int size;
+        bool onTheMove;
+        bool isOnScreen;
 
     public:
         tile(){
@@ -24,12 +25,19 @@ class tile{
         void setColor(const color&);
         void setSize(int);
         void update(SDL_Plotter& g);
+        bool isTouching(tile&, string);
+        bool isOnTheMove();
+        void stopMoving();
+        void startMoving();
 
         void draw(SDL_Plotter& g);
         void move();
         void moveLeft();
         void moveRight();
         void moveDown();
+
+        void setIsOnScreen(bool);
+        bool getIsOnScreen();
 };
 
 #endif // TILE_H_INCLUDED
