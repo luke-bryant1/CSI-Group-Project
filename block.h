@@ -2,35 +2,40 @@
 #define BLOCK_H_INCLUDED
 
 #include "tile.h"
+#include "SDL_Plotter.h"
 
 class Block{
     private:
-        tile tileArray[NUM_TILES];
         point loc;
         color shade;
         blockType type;
         direction orientation;
-        int size;
+        int size = TILE_SIZE;
         bool isCurrentlyMoving;
-        bool isOnScreen;
 
     public:
         Block();
+        tile tileArray[NUM_TILES];
 
         point getLocation() const;
         color getColor() const;
         int getSize() const;
 
-        bool isMoving() const;
+        bool isItMoving() const;
 
         void setLocation(const point&);
-        void setOriginalX();
-        void setOriginalY();
         void setColor(const color&);
         void setSize(int);
+
         void setType(blockType);
         void switchType();
         void update(SDL_Plotter& g);
+        void checkForTileBelow(tile board[][COL], int);
+        void checkForFloorBelow();
+
+
+        void stopMoving();
+        void startMoving();
 
         void draw(SDL_Plotter& g);
         void move();
@@ -38,10 +43,10 @@ class Block{
         void moveRight();
         void moveDown();
         void rotate(); // This rotates blocks *clockwise*
-        bool isTouching(Block[], int, int) const;
-        void stopMoving();
-        void stopIfHitBottom();
 
+        void setRandColor();
+        void setRandType();
+        void setRandOrientation();
 
 };
 
