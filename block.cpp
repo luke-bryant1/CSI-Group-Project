@@ -3,97 +3,49 @@
 Block::Block(){
     size = TILE_SIZE;
     isCurrentlyMoving = true;
-    isOnScreen = true;
+    orientation = north;
 
-//    loc.x = -50;
-//    loc.y = -50;
+    loc.x = STARTING_X;
+    loc.y = STARTING_Y;
 
     //*I think the randomizing functions need to be redone somehow using time. (Sometimes I get weird patterns with the blocks.)
     // I just forgot how to do that lol.
 
     //This builds the block with a random block type
-    switch(rand() % 5){
-        case 0:
-            type = bar;
-            break;
-        case 1:
-            type = square;
-            break;
-        case 2:
-            type = l_shape;
-            break;
-        case 3:
-            type = t_shape;
-            break;
-        case 4:
-            type = z_shape;
-            break;
-    }
+    setRandType();
 
     //This builds the block with a random color
-    switch(rand() % 5){
-        case 0:
-            shade = RED;
-            break;
-        case 1:
-            shade = ORANGE;
-            break;
-        case 2:
-            shade = YELLOW;
-            break;
-        case 3:
-            shade = GREEN;
-            break;
-        case 4:
-            shade = BLUE;
-            break;
-    }
+    setRandColor();
 
     //This builds the block with a random orientation
-    switch(rand() % 4){
-        case 0:
-            orientation = north;
-            break;
-        case 1:
-            orientation = east;
-            break;
-        case 2:
-            orientation = south;
-            break;
-        case 3:
-            orientation = west;
-            break;
-    }
-
-    setColor(shade);
-
+    setRandOrientation();
 }
 
 void Block::moveLeft(){
     point p = getLocation();
-    p.x -= size; //moves the Block left by one tile
+    p.x -= TILE_SIZE; //moves the Block left by one tile
     setLocation(p);
 }
 void Block::moveRight(){
     point p = getLocation();
-    p.x += size; //moves the Block right by one tile
+    p.x += TILE_SIZE; //moves the Block right by one tile
     setLocation(p);
 }
 void Block::moveDown(){
     point p = getLocation();
-    p.y += size; //moves the Block down by one tile
+    p.y += TILE_SIZE; //moves the Block down by one tile
     setLocation(p);
 }
 
 void Block::move(){
     point p = getLocation();
-//    p.y += size; //I have found the moving left to right works better when we fall down smoothly rather than one "size" at a time
-    p.y++;
+    p.y += TILE_SIZE;
+   //p.y++;
     setLocation(p);
 }
 
 void Block::draw(SDL_Plotter& g){
-    if(isOnScreen && isCurrentlyMoving){
+    if(isCurrentlyMoving){
         tileArray[0].draw(g);
         tileArray[1].draw(g);
         tileArray[2].draw(g);
@@ -114,211 +66,216 @@ int Block::getSize() const{
 void Block::setLocation(const point& a1){
     point b1, c1, d1;
 
-     if(isOnScreen && isCurrentlyMoving){
-        loc = a1;
+    loc = a1;
+    switch(type){
+        case bar: //The bar has only two orientations so we only need to have switch statements that rotate the block between two orientations
+            switch(orientation){
+                case north:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-        switch(type){
-            case bar: //The bar has only two orientations so we only need to have switch statements that rotate the block between two orientations
-                switch(orientation){
-                    case north:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    c1.x = a1.x + 2 * size;
+                    c1.y = a1.y;
 
-                        c1.x = a1.x + 2 * size;
-                        c1.y = a1.y;
+                    d1.x = a1.x - size;
+                    d1.y = a1.y;
 
-                        d1.x = a1.x - size;
-                        d1.y = a1.y;
+                    break;
 
-                        break;
+                case south:
+                    b1.x = a1.x;
+                    b1.y = a1.y - size;
 
-                    case east:
-                        b1.x = a1.x;
-                        b1.y = a1.y - size;
+                    c1.x = a1.x;
+                    c1.y = a1.y - 2 * size;
 
-                        c1.x = a1.x;
-                        c1.y = a1.y - 2 * size;
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
 
-                        d1.x = a1.x;
-                        d1.y = a1.y + size;
+                    break;
+            }
 
-                        break;
-                }
+            break;
 
-                break;
+        case square: //The square has only one orientation so we don't need to have switch statements rotate the block
+            b1.x = a1.x + size;
+            b1.y = a1.y;
 
-            case square: //The square has only one orientation so we don't need to have switch statements rotate the block
-                b1.x = a1.x + size;
-                b1.y = a1.y;
+            c1.x = a1.x;
+            c1.y = a1.y - size;
 
-                c1.x = a1.x;
-                c1.y = a1.y - size;
+            d1.x = a1.x + size;
+            d1.y = a1.y - size;
 
-                d1.x = a1.x + size;
-                d1.y = a1.y - size;
+            break;
 
-                break;
+        case l_shape:
+             switch(orientation){
+                case north:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
 
-            case l_shape:
-                 switch(orientation){
-                    case north:
-                        b1.x = a1.x - size;
-                        b1.y = a1.y;
+                    c1.x = a1.x + size;
+                    c1.y = a1.y;
 
-                        c1.x = a1.x + size;
-                        c1.y = a1.y;
+                    d1.x = a1.x + size;
+                    d1.y = a1.y - size;
 
-                        d1.x = a1.x + size;
-                        d1.y = a1.y - size;
+                    break;
 
-                        break;
+                case east:
+                    b1.x = a1.x;
+                    b1.y = a1.y - size;
 
-                    case east:
-                        b1.x = a1.x;
-                        b1.y = a1.y - size;
+                    c1.x = a1.x;
+                    c1.y = a1.y + size;
 
-                        c1.x = a1.x;
-                        c1.y = a1.y + size;
+                    d1.x = a1.x + size;
+                    d1.y = a1.y + size;
 
-                        d1.x = a1.x + size;
-                        d1.y = a1.y + size;
+                    break;
 
-                        break;
+                case south:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-                    case south:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    c1.x = a1.x - size;
+                    c1.y = a1.y;
 
-                        c1.x = a1.x - size;
-                        c1.y = a1.y;
+                    d1.x = a1.x - size;
+                    d1.y = a1.y + size;
 
-                        d1.x = a1.x - size;
-                        d1.y = a1.y + size;
+                    break;
 
-                        break;
+                case west:
+                    b1.x = a1.x;
+                    b1.y = a1.y + size;
 
-                    case west:
-                        b1.x = a1.x;
-                        b1.y = a1.y + size;
+                    c1.x = a1.x;
+                    c1.y = a1.y - size;
 
-                        c1.x = a1.x;
-                        c1.y = a1.y - size;
+                    d1.x = a1.x - size;
+                    d1.y = a1.y - size;
 
-                        d1.x = a1.x - size;
-                        d1.y = a1.y - size;
+                    break;
+             }
 
-                        break;
-                 }
+            break;
 
-                break;
+        case z_shape:
+            switch(orientation){
+                case north:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-            case z_shape://The z_shape only has two orientations as well
-                switch(orientation){
-                    case north:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y - size;
+                    c1.x = a1.x + size;
+                    c1.y = a1.y - size;
 
-                        c1.x = a1.x;
-                        c1.y = a1.y - size;
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
 
-                        d1.x = a1.x - size;
-                        d1.y = a1.y;
+                    break;
 
-                        break;
+                case east:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
 
-                    case east:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    c1.x = a1.x + size;
+                    c1.y = a1.y + size;
 
-                        c1.x = a1.x + size;
-                        c1.y = a1.y + size;
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
 
-                        d1.x = a1.x;
-                        d1.y = a1.y - size;
 
-                        break;
+                    break;
 
-                }
+                case south:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
 
-                break;
+                    c1.x = a1.x - size;
+                    c1.y = a1.y + size;
 
-            case t_shape:
-                switch(orientation){
-                    case north:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
 
-                        c1.x = a1.x - size;
-                        c1.y = a1.y;
+                    break;
 
-                        d1.x = a1.x;
-                        d1.y = a1.y - size;
+                case west:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-                        break;
+                    c1.x = a1.x - size;
+                    c1.y = a1.y - size;
 
-                    case east:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
 
-                        c1.x = a1.x;
-                        c1.y = a1.y + size;
+                    break;
+             }
 
-                        d1.x = a1.x;
-                        d1.y = a1.y - size;
+            break;
 
-                        break;
+        case t_shape:
+            switch(orientation){
+                case north:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-                    case south:
-                        b1.x = a1.x + size;
-                        b1.y = a1.y;
+                    c1.x = a1.x - size;
+                    c1.y = a1.y;
 
-                        c1.x = a1.x - size;
-                        c1.y = a1.y;
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
 
-                        d1.x = a1.x;
-                        d1.y = a1.y + size;
+                    break;
 
-                        break;
+                case east:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-                    case west:
-                        b1.x = a1.x;
-                        b1.y = a1.y - size;
+                    c1.x = a1.x;
+                    c1.y = a1.y + size;
 
-                        c1.x = a1.x - size;
-                        c1.y = a1.y;
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
 
-                        d1.x = a1.x;
-                        d1.y = a1.y + size;
+                    break;
 
-                        break;
-                 }
+                case south:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
 
-                break;
-        }
+                    c1.x = a1.x - size;
+                    c1.y = a1.y;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
+
+                    break;
+
+                case west:
+                    b1.x = a1.x;
+                    b1.y = a1.y - size;
+
+                    c1.x = a1.x - size;
+                    c1.y = a1.y;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
+
+                    break;
+             }
+
+            break;
+    }
 
         tileArray[0].setLocation(a1);
         tileArray[1].setLocation(b1);
         tileArray[2].setLocation(c1);
         tileArray[3].setLocation(d1);
-    }
-
-    if((a1.x >= 0 && a1.x < NUM_COL - size && a1.y < NUM_ROW - size)&& // There are so many because it checks to make sure every single
-       (b1.x >= 0 && b1.x < NUM_COL - size && b1.y < NUM_ROW - size)&& // tile is not touching a wall. I still don't know how to make it
-       (c1.x >= 0 && c1.x < NUM_COL - size && c1.y < NUM_ROW - size)&& // not run into other tiles.
-       (d1.x >= 0 && d1.x < NUM_COL - size && d1.y < NUM_ROW - size)){
-           isOnScreen = true;
-       }
-    else{
-           isOnScreen = false;
-       }
 
     return;
-}
-void Block::setOriginalX(){
-    loc.x = STARTING_X;
-}
-void Block::setOriginalY(){
-    loc.y = STARTING_Y;
 }
 void Block::setColor(const color& c){
     tileArray[0].setColor(c);
@@ -327,10 +284,12 @@ void Block::setColor(const color& c){
     tileArray[3].setColor(c);
     return;
 }
+
 void Block::setSize(int s){
     size = s;
     return;
 }
+
 void Block::setType(blockType input_type){
     type = input_type;
 }
@@ -365,9 +324,9 @@ void Block::rotate(){
 
             switch(orientation){
                 case north:
-                    orientation = east;
+                    orientation = south;
                     break;
-                case east:
+                case south:
                     orientation = north;
                     break;
             }
@@ -404,6 +363,12 @@ void Block::rotate(){
                     orientation = east;
                     break;
                 case east:
+                    orientation = south;
+                    break;
+                case south:
+                    orientation = west;
+                    break;
+                case west:
                     orientation = north;
                     break;
             }
@@ -431,35 +396,100 @@ void Block::rotate(){
     }
 
 }
-bool Block::isMoving() const{
+bool Block::isItMoving() const{
     return isCurrentlyMoving;
 }
-
-bool Block::isTouching(Block blockArray[], int NUM_OF_BLOCKS, int m) const{
-    bool collide = false;
-    for(int i = 0; i < NUM_OF_BLOCKS; i++){
-        for(int j = 0; j < NUM_TILES; j++){
-            for(int k = 0; k < NUM_TILES; k++){
-                if(m!=i && blockArray[i].tileArray[j].getLocation().x == tileArray[k].getLocation().x
-                        && blockArray[i].tileArray[j].getLocation().y == tileArray[k].getLocation().y  + TILE_SIZE ){
-                    collide = true;
+void Block::checkForTileBelow(tile board[][COL], int ROW){
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                if( tileArray[0].isTouching(board[i][j], "down") ||
+                    tileArray[1].isTouching(board[i][j], "down") ||
+                    tileArray[2].isTouching(board[i][j], "down") ||
+                    tileArray[3].isTouching(board[i][j], "down") ){
+                    stopMoving();
                 }
             }
         }
     }
-    return collide; //returns true if tiles are touching
+}
+void Block::checkForFloorBelow(){
+    if( tileArray[0].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[1].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[2].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE){
+        stopMoving();
+    }
 }
 
 void Block::stopMoving(){
     isCurrentlyMoving = false;
+    tileArray[0].stopMoving();
+    tileArray[1].stopMoving();
+    tileArray[2].stopMoving();
+    tileArray[3].stopMoving();
 }
 
-void Block::stopIfHitBottom(){
-    if((tileArray[0].getLocation().y == NUM_ROW - size)&&
-       (tileArray[1].getLocation().y == NUM_ROW - size)&&
-       (tileArray[2].getLocation().y == NUM_ROW - size)&&
-       (tileArray[3].getLocation().y == NUM_ROW - size)){
-            stopMoving();
-       }
+void Block::startMoving(){
+    isCurrentlyMoving = true;
+    tileArray[0].startMoving();
+    tileArray[1].startMoving();
+    tileArray[2].startMoving();
+    tileArray[3].startMoving();
 }
-
+void Block::setRandColor(){
+    switch(rand() % 5){
+            case 0:
+                shade = RED;
+                break;
+            case 1:
+                shade = ORANGE;
+                break;
+            case 2:
+                shade = YELLOW;
+                break;
+            case 3:
+                shade = GREEN;
+                break;
+            case 4:
+                shade = BLUE;
+                break;
+    }
+    setColor(shade);
+}
+void Block::setRandType(){
+    switch(rand() % 5){
+        case 0:
+            type = bar;
+            break;
+        case 1:
+            type = square;
+            break;
+        case 2:
+            type = l_shape;
+            break;
+        case 3:
+            type = t_shape;
+            break;
+        case 4:
+            type = z_shape;
+            break;
+    }
+    setType(type);
+}
+void Block::setRandOrientation(){
+    switch(rand() % 4){
+        case 0:
+            orientation = north;
+            break;
+        case 1:
+            orientation = east;
+            break;
+        case 2:
+            orientation = south;
+            break;
+        case 3:
+            orientation = west;
+            break;
+    }
+}
