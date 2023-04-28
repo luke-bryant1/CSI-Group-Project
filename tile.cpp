@@ -31,6 +31,7 @@ void tile::draw(SDL_Plotter& g){
             g.plotPixel(prevLoc.x + c, prevLoc.y + r, BACKGROUND); //this erases the previous location
         }
     }
+
     //draw
     for(int r = 0; r < size; r++){ //"size" comes from inside the object
         for(int c = 0; c < size; c++){
@@ -55,12 +56,12 @@ int tile::getSize() const{
 }
 
 void tile::setLocation(const point& p){
-//    prevLoc = loc; //This sets the previous location to loc before it updates loc
-//    we had to to move this to the last place that it was drawn so it wouldn't leave a streak
-    if(p.x >= 0 && p.y>= 0 &&
-       p.x < NUM_COL - size && p.y < NUM_ROW - size){
-        loc = p;
+    loc = p;
+
+    if(p.y == NUM_ROW - size){
+        onTheMove = false;
     }
+
     return;
 }
 void tile::setColor(const color& c){
@@ -74,3 +75,45 @@ void tile::setSize(int s){
 void tile::update(SDL_Plotter& g){
     g.update();
 }
+
+bool tile::isTouching(tile& other, string direcToCheck){
+    bool itIsTouching = false;
+
+    if(direcToCheck == "left"){
+        if(loc.x - TILE_SIZE == other.loc.x &&
+           loc.y == other.loc.y){
+                itIsTouching = true;
+        }
+    }
+    if(direcToCheck == "right"){
+        if(loc.x + TILE_SIZE == other.loc.x &&
+           loc.y == other.loc.y){
+            itIsTouching = true;
+        }
+    }
+    if(direcToCheck == "down"){
+        if(loc.x == other.loc.x &&
+           loc.y + TILE_SIZE == other.loc.y){
+            itIsTouching = true;
+        }
+    }
+
+    return itIsTouching;
+}
+bool tile::isOnTheMove(){
+    return onTheMove;
+}
+void tile::stopMoving(){
+    onTheMove = false;
+}
+void tile::startMoving(){
+    onTheMove = true;
+}
+
+void tile::setIsOnScreen(bool onOrOff){
+    isOnScreen = onOrOff;
+}
+bool tile::getIsOnScreen(){
+    return isOnScreen;
+}
+
