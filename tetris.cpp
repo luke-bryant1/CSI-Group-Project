@@ -36,7 +36,9 @@ void Tetris::runTetris(SDL_Plotter& g){
                                 break;
             }
         }
+
         updateBoard(g);
+        checkForFullRow();
         currentBlock.checkForTileBelow(board,ROW);
         currentBlock.checkForFloorBelow();
         currentBlock.move();
@@ -44,6 +46,7 @@ void Tetris::runTetris(SDL_Plotter& g){
         currentBlock.update(g);
 
         if(!currentBlock.isItMoving()){
+
             addBlockToBoard(currentBlock);
             currentBlock.setLocation(START_POINT);
             currentBlock.setRandColor();
@@ -51,7 +54,6 @@ void Tetris::runTetris(SDL_Plotter& g){
             currentBlock.update(g);
             currentBlock.startMoving();
         }
-
 
         g.Sleep(SPEED);
     }
@@ -81,3 +83,22 @@ void Tetris::updateBoard(SDL_Plotter& g){
         }
     }
 }
+
+void Tetris::checkForFullRow(){
+    int count;
+    for(int i = 0; i < ROW; i++){
+        count = 0;
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                count++;
+            }
+            if(count == COL){
+                for(int k = 0; k < COL; k++){
+                    board[i][k].setColor(board[i-1][k].getColor());
+                    board[i][k].setIsOnScreen(board[i-1][k].getIsOnScreen());
+                }
+            }
+        }
+    }
+}
+
