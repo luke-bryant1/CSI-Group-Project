@@ -16,9 +16,6 @@ Block::Block(){
 
     //This builds the block with a random color
     setRandColor();
-
-    //This builds the block with a random orientation
-    setRandOrientation();
 }
 
 void Block::moveLeft(){
@@ -107,7 +104,7 @@ void Block::setLocation(const point& a1){
 
             break;
 
-        case square: //The square has only one orientation so we don't need to have switch statements rotate the block
+        case square:
             b1.x = a1.x + size;
             b1.y = a1.y;
 
@@ -425,6 +422,7 @@ void Block::checkForTileBelow(tile board[][COL], int ROW){
         }
     }
 }
+
 void Block::checkForFloorBelow(){
     if( tileArray[0].getLocation().y == NUM_ROW - TILE_SIZE ||
         tileArray[1].getLocation().y == NUM_ROW - TILE_SIZE ||
@@ -432,16 +430,6 @@ void Block::checkForFloorBelow(){
         tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE ){
         stopMoving();
     }
-}
-
-void Block::checkForWall(){
-    if( tileArray[0].getLocation().x == NUM_COL - TILE_SIZE ||
-        tileArray[1].getLocation().x == NUM_COL - TILE_SIZE ||
-        tileArray[2].getLocation().x == NUM_COL - TILE_SIZE ||
-        tileArray[3].getLocation().x == NUM_COL - TILE_SIZE){
-        stopMoving();
-    }
-
 }
 
 void Block::stopMoving(){
@@ -479,6 +467,7 @@ void Block::setRandColor(){
     }
     setColor(shade);
 }
+
 void Block::setRandType(){
     switch(rand() % 5){
         case 0:
@@ -499,19 +488,4 @@ void Block::setRandType(){
     }
     setType(type);
 }
-void Block::setRandOrientation(){
-    switch(rand() % 4){
-        case 0:
-            orientation = north;
-            break;
-        case 1:
-            orientation = east;
-            break;
-        case 2:
-            orientation = south;
-            break;
-        case 3:
-            orientation = west;
-            break;
-    }
-}
+
