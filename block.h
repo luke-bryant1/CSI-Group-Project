@@ -45,7 +45,8 @@ class Block{
 
         void setRandColor();
         void setRandType();
-        void setRandOrientation();
+
+
 
 };
 
