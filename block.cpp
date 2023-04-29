@@ -22,14 +22,24 @@ Block::Block(){
 }
 
 void Block::moveLeft(){
-    point p = getLocation();
-    p.x -= TILE_SIZE; //moves the Block left by one tile
-    setLocation(p);
+    if(tileArray[0].getLocation().x > 0 &&
+       tileArray[1].getLocation().x > 0 &&
+       tileArray[2].getLocation().x > 0 &&
+       tileArray[3].getLocation().x > 0){
+        point p = getLocation();
+        p.x -= TILE_SIZE; //moves the Block left by one tile
+        setLocation(p);
+    }
 }
 void Block::moveRight(){
-    point p = getLocation();
-    p.x += TILE_SIZE; //moves the Block right by one tile
-    setLocation(p);
+    if(tileArray[0].getLocation().x < NUM_COL - TILE_SIZE &&
+       tileArray[1].getLocation().x < NUM_COL - TILE_SIZE &&
+       tileArray[2].getLocation().x < NUM_COL - TILE_SIZE &&
+       tileArray[3].getLocation().x < NUM_COL - TILE_SIZE){
+        point p = getLocation();
+        p.x += TILE_SIZE; //moves the Block right by one tile
+        setLocation(p);
+    }
 }
 void Block::moveDown(){
     point p = getLocation();
@@ -311,9 +321,11 @@ void Block::switchType(){
             break;
     }
 }
+
 void Block::update(SDL_Plotter& g){
     g.update();
 }
+
 void Block::rotate(){
     // This function rotates the block. Based on the type of the block there are a different number of orientations the block can have. For
     // example, a square has 1 orientation, and a bar has 2, and the others have 4. That is why we will have to have switch statements to
@@ -420,6 +432,16 @@ void Block::checkForFloorBelow(){
         tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE ){
         stopMoving();
     }
+}
+
+void Block::checkForWall(){
+    if( tileArray[0].getLocation().x == NUM_COL - TILE_SIZE ||
+        tileArray[1].getLocation().x == NUM_COL - TILE_SIZE ||
+        tileArray[2].getLocation().x == NUM_COL - TILE_SIZE ||
+        tileArray[3].getLocation().x == NUM_COL - TILE_SIZE){
+        stopMoving();
+    }
+
 }
 
 void Block::stopMoving(){
