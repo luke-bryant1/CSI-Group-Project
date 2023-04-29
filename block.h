@@ -33,6 +33,10 @@ class Block{
         void checkForTileBelow(tile board[][COL], int);
         void checkForFloorBelow();
 
+        bool checkForTileUnder(tile board[][COL], int);
+        bool checkForTileLeft(tile board[][COL], int);
+        bool checkForTileRight(tile board[][COL], int);
+
         void stopMoving();
         void startMoving();
 
@@ -43,7 +47,6 @@ class Block{
         void moveDown();
         void rotate(); // This rotates blocks *clockwise*
 
-        void setRandColor();
         void setRandType();
 
 
