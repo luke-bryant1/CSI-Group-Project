@@ -7,7 +7,6 @@
 #include "block.h"
 
 
-
 class Tetris{
     private:
         tile board[ROW][COL];
@@ -15,18 +14,13 @@ class Tetris{
 
     public:
 
-        void setBoard();
+        void setBoard(SDL_Plotter& g);
         void runTetris(SDL_Plotter& g);
 
         void addBlockToBoard(Block);
         void updateBoard(SDL_Plotter& g);
 
-        void checkForFullRow();
-
-
-
-
-
+        void checkForFullRow(SDL_Plotter& g);
 
 };
 
