@@ -40,7 +40,7 @@ void Block::moveDown(){
 void Block::move(){
     point p = getLocation();
     p.y += TILE_SIZE;
-   //p.y++;
+    //p.y++;
     setLocation(p);
 }
 
@@ -417,7 +417,7 @@ void Block::checkForFloorBelow(){
     if( tileArray[0].getLocation().y == NUM_ROW - TILE_SIZE ||
         tileArray[1].getLocation().y == NUM_ROW - TILE_SIZE ||
         tileArray[2].getLocation().y == NUM_ROW - TILE_SIZE ||
-        tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE){
+        tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE ){
         stopMoving();
     }
 }
