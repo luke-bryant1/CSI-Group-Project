@@ -1,7 +1,7 @@
 #include "tetris.h"
 
 
-void Tetris::setBoard(){
+void Tetris::setBoard(SDL_Plotter& g){
     point p(0,0);
 
     for(int i = 0; i < ROW; i++){
@@ -10,6 +10,8 @@ void Tetris::setBoard(){
                 p.x = 0;
             }
             board[i][j].setLocation(p);
+            board[i][j].setColor(BACKGROUND);\
+            board[i][j].draw(g);
             board[i][j].setIsOnScreen(false);
             p.x+= TILE_SIZE;
         }
@@ -38,7 +40,7 @@ void Tetris::runTetris(SDL_Plotter& g){
         }
 
         updateBoard(g);
-        checkForFullRow();
+        checkForFullRow(g);
         currentBlock.checkForTileBelow(board,ROW);
         currentBlock.checkForFloorBelow();
         currentBlock.move();
@@ -84,7 +86,7 @@ void Tetris::updateBoard(SDL_Plotter& g){
     }
 }
 
-void Tetris::checkForFullRow(){
+void Tetris::checkForFullRow(SDL_Plotter& g){
     int count;
     for(int i = 0; i < ROW; i++){
         count = 0;
@@ -94,8 +96,11 @@ void Tetris::checkForFullRow(){
             }
             if(count == COL){
                 for(int k = 0; k < COL; k++){
-                    board[i][k].setColor(board[i-1][k].getColor());
-                    board[i][k].setIsOnScreen(board[i-1][k].getIsOnScreen());
+                    for(int l = i; l > 0; l--){
+                        board[l][k].setColor(board[l-1][k].getColor());
+                        board[l][k].draw(g);
+                        board[l][k].setIsOnScreen(board[l-1][k].getIsOnScreen());
+                    }
                 }
             }
         }
