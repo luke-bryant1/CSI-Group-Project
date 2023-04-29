@@ -1,25 +1,14 @@
 #include "block.h"
 
-
-
-
-
 Block::Block(){
     size = TILE_SIZE;
     isCurrentlyMoving = true;
-    orientation = south;
+    orientation = east;
 
     loc.x = STARTING_X;
     loc.y = STARTING_Y;
 
-    //*I think the randomizing functions need to be redone somehow using time. (Sometimes I get weird patterns with the blocks.)
-    // I just forgot how to do that lol.
-
-    //This builds the block with a random block type
     setRandType();
-
-    //This builds the block with a random color
-    setRandColor();
 }
 
 void Block::moveLeft(){
@@ -43,17 +32,20 @@ void Block::moveRight(){
     }
 }
 void Block::moveDown(){
+    if(tileArray[0].getLocation().y < NUM_ROW - TILE_SIZE &&
+       tileArray[1].getLocation().y < NUM_ROW - TILE_SIZE &&
+       tileArray[2].getLocation().y < NUM_ROW - TILE_SIZE &&
+       tileArray[3].getLocation().y < NUM_ROW - TILE_SIZE){
         point p = getLocation();
         p.y += TILE_SIZE; //moves the Block down by one tile
         setLocation(p);
-    
+    }
 }
 
 void Block::move(){
-    if(getLocation().y < NUM_ROW){
+    if(getLocation().y <= NUM_ROW - TILE_SIZE){
         point p = getLocation();
         p.y += TILE_SIZE;
-        //p.y++;
         setLocation(p);
     }
 }
@@ -82,8 +74,7 @@ void Block::setLocation(const point& a1){
 
     loc = a1;
     switch(type){
-        case bar: //The bar has only two orientations so we only need to have switch statements that rotate the block between two orientations
-            
+        case bar: 
             switch(orientation){
                 case north:
                     b1.x = a1.x + size;
@@ -431,11 +422,60 @@ void Block::checkForTileBelow(tile board[][COL], int ROW){
     }
 }
 
+bool Block::checkForTileUnder(tile board[][COL], int ROW){
+    bool isTile = false;
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                if( tileArray[0].isTouching(board[i][j], "down") ||
+                    tileArray[1].isTouching(board[i][j], "down") ||
+                    tileArray[2].isTouching(board[i][j], "down") ||
+                    tileArray[3].isTouching(board[i][j], "down") ){
+                    isTile = true;
+                }
+            }
+        }
+    }
+    return isTile;
+}
+bool Block::checkForTileLeft(tile board[][COL], int ROW){
+    bool isTile = false;
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                if( tileArray[0].isTouching(board[i][j], "left") ||
+                    tileArray[1].isTouching(board[i][j], "left") ||
+                    tileArray[2].isTouching(board[i][j], "left") ||
+                    tileArray[3].isTouching(board[i][j], "left") ){
+                    isTile = true;
+                }
+            }
+        }
+    }
+    return isTile;
+}
+bool Block::checkForTileRight(tile board[][COL], int ROW){
+    bool isTile = false;
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                if( tileArray[0].isTouching(board[i][j], "right") ||
+                    tileArray[1].isTouching(board[i][j], "right") ||
+                    tileArray[2].isTouching(board[i][j], "right") ||
+                    tileArray[3].isTouching(board[i][j], "right") ){
+                    isTile = true;
+                }
+            }
+        }
+    }
+    return isTile;
+}
+
 void Block::checkForFloorBelow(){
-    if( tileArray[0].getLocation().y == NUM_ROW - TILE_SIZE ||
-        tileArray[1].getLocation().y == NUM_ROW - TILE_SIZE ||
-        tileArray[2].getLocation().y == NUM_ROW - TILE_SIZE ||
-        tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE ){
+    if( tileArray[0].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
+        tileArray[1].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
+        tileArray[2].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
+        tileArray[3].getLocation().y == NUM_ROW - 2 * TILE_SIZE ){
         stopMoving();
     }
 }
@@ -455,46 +495,31 @@ void Block::startMoving(){
     tileArray[2].startMoving();
     tileArray[3].startMoving();
 }
-void Block::setRandColor(){
-    switch(type){
-            case l_shape:
-                shade = RED;
-                break;
-            case t_shape:
-                shade = PURPLE;
-                break;
-            case square:
-                shade = YELLOW;
-                break;
-            case z_shape:
-                shade = GREEN;
-                break;
-            case bar:
-                shade = CYAN;
-                break;
-    }
-    setColor(shade);
-}
 
 void Block::setRandType(){
-    srand(time(NULL));
     switch(rand() % 5){
         case 0:
-            type = bar;
+            type  = bar;
+            shade = CYAN;
             break;
         case 1:
-            type = square;
+            type  = square;
+            shade = YELLOW;
             break;
         case 2:
-            type = l_shape;
+            type  = l_shape;
+            shade = RED;
             break;
         case 3:
-            type = t_shape;
+            type  = t_shape;
+            shade = BLUE;
             break;
         case 4:
-            type = z_shape;
+            type  = z_shape;
+            shade = PURPLE;
             break;
     }
     setType(type);
+    setColor(shade);
 }
 
