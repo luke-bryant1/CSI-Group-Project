@@ -33,7 +33,6 @@ class Block{
         void checkForTileBelow(tile board[][COL], int);
         void checkForFloorBelow();
 
-
         void stopMoving();
         void startMoving();
 
