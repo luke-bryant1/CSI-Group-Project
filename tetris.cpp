@@ -10,7 +10,7 @@ void Tetris::setBoard(SDL_Plotter& g){
                 p.x = 0;
             }
             board[i][j].setLocation(p);
-            board[i][j].setColor(BACKGROUND);\
+            board[i][j].setColor(BACKGROUND);
             board[i][j].draw(g);
             board[i][j].setIsOnScreen(false);
             p.x+= TILE_SIZE;
@@ -28,11 +28,20 @@ void Tetris::runTetris(SDL_Plotter& g){
         if(g.kbhit()){
             key = g.getKey();
             switch(key){
-                case RIGHT_ARROW: currentBlock.moveRight();
+                case RIGHT_ARROW:
+                    if(!currentBlock.checkForTileRight(board,ROW)){
+                        currentBlock.moveRight();
+                    }
                                 break;
-                case LEFT_ARROW: currentBlock.moveLeft();
+                case LEFT_ARROW:
+                    if(!currentBlock.checkForTileLeft(board,ROW)){
+                        currentBlock.moveLeft();
+                    }
                                 break;
-                case DOWN_ARROW: currentBlock.moveDown();
+                case DOWN_ARROW:
+                    if(!currentBlock.checkForTileUnder(board,ROW)){
+                        currentBlock.moveDown();
+                    }
                                 break;
                 case UP_ARROW: currentBlock.rotate();
                                 break;
@@ -43,7 +52,11 @@ void Tetris::runTetris(SDL_Plotter& g){
         checkForFullRow(g);
         currentBlock.checkForTileBelow(board,ROW);
         currentBlock.checkForFloorBelow();
-        currentBlock.move();
+
+        if(!currentBlock.checkForTileUnder(board,ROW)){
+            currentBlock.move();
+        }
+
         currentBlock.draw(g);
         currentBlock.update(g);
 
@@ -51,7 +64,6 @@ void Tetris::runTetris(SDL_Plotter& g){
 
             addBlockToBoard(currentBlock);
             currentBlock.setLocation(START_POINT);
-            currentBlock.setRandColor();
             currentBlock.setRandType();
             currentBlock.update(g);
             currentBlock.startMoving();
@@ -67,7 +79,7 @@ void Tetris::addBlockToBoard(Block inputBlock){
         for(int j = 0; j < COL; j++){
             for(int k = 0; k < NUM_TILES; k++){
                 if(board[i][j].getLocation().x == inputBlock.tileArray[k].getLocation().x &&
-                   board[i][j].getLocation().y == inputBlock.tileArray[k].getLocation().y - TILE_SIZE){
+                   board[i][j].getLocation().y == inputBlock.tileArray[k].getLocation().y ){
                         board[i][j].setColor(inputBlock.tileArray[k].getColor());
                         board[i][j].setIsOnScreen(true);
                 }
