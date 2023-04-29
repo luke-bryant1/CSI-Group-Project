@@ -37,7 +37,7 @@ void tile::draw(SDL_Plotter& g){
         for(int c = 0; c < size; c++){
             currColor = shade;
             if(c == 0 || r == 0 || r == size - 1 || c == size - 1){
-                currColor = BLACK; //This adds a black boarder around the edge of the tile
+                currColor = BACKGROUND; //This adds a black boarder around the edge of the tile
             }
             g.plotPixel(loc.x + c, loc.y + r, currColor); //this draws the square
         }
