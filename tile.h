@@ -6,8 +6,8 @@
 
 class tile{
     private:
-        point loc, prevLoc;   //"loc" is for the location
-        color shade; // "shade" is for the color
+        point loc, prevLoc;
+        color shade;
         int size;
         bool onTheMove;
         bool isOnScreen;
