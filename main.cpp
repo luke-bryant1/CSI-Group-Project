@@ -7,7 +7,7 @@ int main(int argc, char ** argv){
     SDL_Plotter g(NUM_ROW,NUM_COL);
     Tetris game;
 
-    game.setBoard();
+    game.setBoard(g);
     game.runTetris(g);
 }
 
