@@ -1,34 +1,43 @@
-#ifndef TETRIS_H_INCLUDED
-#define TETRIS_H_INCLUDED
+#ifndef TILE_H_INCLUDED
+#define TILE_H_INCLUDED
 
 #include "SDL_Plotter.h"
 #include "constants.h"
-#include "tile.h"
-#include "block.h"
 
-
-
-class Tetris{
+class tile{
     private:
-        tile board[ROW][COL];
-        Block currentBlock;
+        point loc, prevLoc;   //"loc" is for the location
+        color shade; // "shade" is for the color
+        int size;
+        bool onTheMove;
+        bool isOnScreen;
 
     public:
+        tile(){
+            size = TILE_SIZE;
+        }
 
-        void setBoard();
-        void runTetris(SDL_Plotter& g);
+        point getLocation() const;
+        color getColor() const;
+        int getSize() const;
 
-        void addBlockToBoard(Block);
-        void updateBoard(SDL_Plotter& g);
+        void setLocation(const point&);
+        void setColor(const color&);
+        void setSize(int);
+        void update(SDL_Plotter& g);
+        bool isTouching(tile&, string);
+        bool isOnTheMove();
+        void stopMoving();
+        void startMoving();
 
+        void draw(SDL_Plotter& g);
+        void move();
+        void moveLeft();
+        void moveRight();
+        void moveDown();
 
-
-
-
-
+        void setIsOnScreen(bool);
+        bool getIsOnScreen();
 };
 
-
-
-
-#endif // TETRIS_H_INCLUDED
+#endif // TILE_H_INCLUDED
