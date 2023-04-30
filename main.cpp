@@ -3,17 +3,14 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char ** argv){
     SDL_Plotter g(NUM_ROW,NUM_COL);
     Tetris game;
 
     game.setBoard(g);
+
+    game.drawRightBoard(g);
+
     game.runTetris(g);
-    cout << endl << "******************************" << endl;
-    cout << "  NUMBER OF LINES CLEARED: " << game.getLine() << endl;
-    cout << "  SCORE: " << game.getScore() << endl;
-    cout << "******************************" << endl << endl;
-    
-    
 }
 

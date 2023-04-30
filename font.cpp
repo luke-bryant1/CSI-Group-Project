@@ -35,7 +35,6 @@ void letter::draw(int n, point p, SDL_Plotter& g){
                 for(int xOff = 0; xOff < n; xOff++){
                     for(int yOff = 0; yOff < n; yOff++){
                         g.plotPixel(xOff + p.x + c * n, yOff + p.y + r * n,0,0,0);
-                        g.plotPixel(NUM_COL-200, 50,0,0,0);
                     }
                 }
             }
@@ -50,8 +49,14 @@ Font::Font(){
         fname += c;
         fname += ".txt";
         data[c].init(fname);
-        cout << fname << endl;
     }
+    for(char c = '0'; c <= '9'; c++){
+        fname = "font\\";
+        fname += c;
+        fname += ".txt";
+        data[c].init(fname);
+    }
+
     loc.x = 0;
     loc.y = 0;
     size = 1;
@@ -74,3 +79,11 @@ void Font::display(char c, ostream& out){
 void Font::draw(char c, SDL_Plotter& g){
     data[c].draw(size,loc, g);
 }
+
+void Font::draw(string word, SDL_Plotter& g){
+    for(int i = 0; i < word.size(); i++){
+        draw(word.at(i), g);
+        loc.x += size * 11;
+    }
+}
+

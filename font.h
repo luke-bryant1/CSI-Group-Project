@@ -1,11 +1,8 @@
 #ifndef FONT_H_INCLUDED
 #define FONT_H_INCLUDED
 
-
 #include "tetris.h"
 #include "SDL_Plotter.h"
-
-using namespace std;
 
 class letter{
     private:
@@ -38,6 +35,8 @@ class Font{
         void display(char, ostream& out = cout);
 
         void draw(char, SDL_Plotter& g);
+
+        void draw(string, SDL_Plotter& g);
 
 
 

@@ -24,6 +24,7 @@ const color CYAN       = color(0, 255, 255);
 const color BLUE       = color(0, 0, 255);
 const color PURPLE     = color(128, 0, 128);
 const color BLACK      = color(0, 0, 0);
+const color LIGHTGRAY  = color(170, 170, 170);
 const color BACKGROUND = color(127, 127, 127);
 
 const int MAX_FONT_SIZE = 25;

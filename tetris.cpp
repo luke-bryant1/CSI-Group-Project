@@ -6,7 +6,7 @@ void Tetris::setBoard(SDL_Plotter& g){
 
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
-            if(p.x == NUM_COL){
+            if(p.x == COL * TILE_SIZE){
                 p.x = 0;
             }
             board[i][j].setLocation(p);
@@ -15,8 +15,32 @@ void Tetris::setBoard(SDL_Plotter& g){
             board[i][j].setIsOnScreen(false);
             p.x+= TILE_SIZE;
         }
-        if(p.y == NUM_ROW){
-            p.y = 0;
+        p.y+= TILE_SIZE;
+    }
+}
+
+void Tetris::grid(SDL_Plotter& g){
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            board[i][j].draw(g);
+        }
+    }
+}
+
+
+void Tetris::drawRightBoard(SDL_Plotter& g){
+    point p(COL * (TILE_SIZE + 1),0);
+
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(p.x == NUM_COL - TILE_SIZE){
+                p.x = COL * (TILE_SIZE + 1);
+            }
+            cout << "bruh" << endl;
+            rightBoard[i][j].setLocation(p);
+            rightBoard[i][j].setColor(GREEN);
+            rightBoard[i][j].draw(g);
+            p.x+= TILE_SIZE;
         }
         p.y+= TILE_SIZE;
     }
@@ -24,6 +48,29 @@ void Tetris::setBoard(SDL_Plotter& g){
 
 void Tetris::runTetris(SDL_Plotter& g){
     char key;
+    point p;
+    int currentScore, previousScore;
+    string stringScore = "000000";
+    stringstream ss;
+
+    blankTile.setColor(GREEN);
+
+
+    letter chr;
+    Font text;
+
+    p.x = 300;
+    p.y = 100;
+
+    text.setLoc(p);
+    text.setSize(2);
+
+    text.draw("SCORE", g);
+
+    p.x = 300;
+    p.y = 150;
+
+
     while(!g.getQuit()){
         if(g.kbhit()){
             while(key = g.getKey()){
@@ -48,9 +95,31 @@ void Tetris::runTetris(SDL_Plotter& g){
                 }
             }
         }
-        
+        previousScore = currentScore;
+
         updateBoard(g);
         checkForFullRow(g);
+
+        currentScore = getScore();
+
+        if(currentScore > previousScore){
+            for(int i = 0; i < 5;i++){
+                blankTile.setLocation(p);
+                blankTile.draw(g);
+                p.x += TILE_SIZE;
+            }
+
+            p.x = 300;
+            p.y = 150;
+
+            text.setLoc(p);
+            ss.clear();
+            ss.str("");
+            ss << currentScore;
+            string stringScore = ss.str();
+            text.draw(stringScore,g);
+        }
+
         currentBlock.checkForTileBelow(board,ROW);
         currentBlock.checkForFloorBelow();
         updateBoard(g);
@@ -59,14 +128,14 @@ void Tetris::runTetris(SDL_Plotter& g){
             currentBlock.move();
         }
 
+        grid(g);
         updateBoard(g);
         currentBlock.draw(g);
         currentBlock.update(g);
+        grid(g);
         currentBlock.draw(g);
         currentBlock.update(g);
         updateBoard(g);
-        
-        
 
         if(!currentBlock.isItMoving()){
 
