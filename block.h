@@ -17,6 +17,8 @@ class Block{
         Block();
         tile tileArray[NUM_TILES];
 
+    
+    
         point getLocation() const;
         color getColor() const;
         int getSize() const;
