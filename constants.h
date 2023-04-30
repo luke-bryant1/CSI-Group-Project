@@ -6,8 +6,8 @@ const int ROW = 25;
 
 const int NUM_TILES     = 4;
 const int TILE_SIZE     = 25;
-const int NUM_ROW = TILE_SIZE * (ROW);
-const int NUM_COL = TILE_SIZE * COL;
+const int NUM_ROW = TILE_SIZE * ROW;
+const int NUM_COL = TILE_SIZE * COL * 2;
 
 const int STARTING_X    = TILE_SIZE * 4;
 const int STARTING_Y    = TILE_SIZE * 3;
@@ -25,6 +25,8 @@ const color BLUE       = color(0, 0, 255);
 const color PURPLE     = color(128, 0, 128);
 const color BLACK      = color(0, 0, 0);
 const color BACKGROUND = color(127, 127, 127);
+
+const int MAX_FONT_SIZE = 25;
 
 enum blockType {bar, square, l_shape, t_shape, z_shape};
 enum direction {north, east, south, west};
