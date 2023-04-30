@@ -1,4 +1,8 @@
 #include "block.h"
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
 
 Block::Block(){
     size = TILE_SIZE;
@@ -8,7 +12,12 @@ Block::Block(){
     loc.x = STARTING_X;
     loc.y = STARTING_Y;
 
+    //*I think the randomizing functions need to be redone somehow using time. (Sometimes I get weird patterns with the blocks.)
+    // I just forgot how to do that lol.
+
+    //This builds the block with a random block type
     setRandType();
+
 }
 
 void Block::moveLeft(){
@@ -22,10 +31,10 @@ void Block::moveLeft(){
     }
 }
 void Block::moveRight(){
-    if(tileArray[0].getLocation().x < NUM_COL - TILE_SIZE &&
-       tileArray[1].getLocation().x < NUM_COL - TILE_SIZE &&
-       tileArray[2].getLocation().x < NUM_COL - TILE_SIZE &&
-       tileArray[3].getLocation().x < NUM_COL - TILE_SIZE){
+    if(tileArray[0].getLocation().x < COL * (TILE_SIZE - 3) &&
+       tileArray[1].getLocation().x < COL * (TILE_SIZE - 3) &&
+       tileArray[2].getLocation().x < COL * (TILE_SIZE - 3) &&
+       tileArray[3].getLocation().x < COL * (TILE_SIZE - 3) ){
         point p = getLocation();
         p.x += TILE_SIZE; //moves the Block right by one tile
         setLocation(p);
@@ -74,7 +83,7 @@ void Block::setLocation(const point& a1){
 
     loc = a1;
     switch(type){
-        case bar: 
+        case bar: //The bar has only two orientations so we only need to have switch statements that rotate the block between two orientations
             switch(orientation){
                 case north:
                     b1.x = a1.x + size;
@@ -497,6 +506,7 @@ void Block::startMoving(){
 }
 
 void Block::setRandType(){
+    srand(time(0));
     switch(rand() % 5){
         case 0:
             type  = bar;
