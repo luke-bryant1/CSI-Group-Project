@@ -6,7 +6,7 @@ void Tetris::setBoard(SDL_Plotter& g){
 
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
-            if(p.x == NUM_COL){
+            if(p.x == COL * TILE_SIZE){
                 p.x = 0;
             }
             board[i][j].setLocation(p);
@@ -118,4 +118,19 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
         }
     }
 }
+
+void Tetris::displayStartScreen(SDL_Plotter& g){
+
+
+
+
+
+
+
+
+
+
+
+}
+
 
