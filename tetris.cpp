@@ -6,7 +6,7 @@ void Tetris::setBoard(SDL_Plotter& g){
 
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
-            if(p.x == COL * TILE_SIZE){
+            if(p.x == NUM_COL){
                 p.x = 0;
             }
             board[i][j].setLocation(p);
@@ -26,39 +26,47 @@ void Tetris::runTetris(SDL_Plotter& g){
     char key;
     while(!g.getQuit()){
         if(g.kbhit()){
-            key = g.getKey();
-            switch(key){
-                case RIGHT_ARROW:
-                    if(!currentBlock.checkForTileRight(board,ROW)){
-                        currentBlock.moveRight();
-                    }
-                                break;
-                case LEFT_ARROW:
-                    if(!currentBlock.checkForTileLeft(board,ROW)){
-                        currentBlock.moveLeft();
-                    }
-                                break;
-                case DOWN_ARROW:
-                    if(!currentBlock.checkForTileUnder(board,ROW)){
-                        currentBlock.moveDown();
-                    }
-                                break;
-                case UP_ARROW: currentBlock.rotate();
-                                break;
+            while(key = g.getKey()){
+                switch(key){
+                    case RIGHT_ARROW:
+                        if(!currentBlock.checkForTileRight(board,ROW)){
+                            currentBlock.moveRight();
+                        }
+                        break;
+                    case LEFT_ARROW:
+                        if(!currentBlock.checkForTileLeft(board,ROW)){
+                            currentBlock.moveLeft();
+                        }
+                        break;
+                    case DOWN_ARROW:
+                        if(!currentBlock.checkForTileUnder(board,ROW)){
+                            currentBlock.moveDown();
+                        }
+                        break;
+                    case UP_ARROW: currentBlock.rotate();
+                        break;
+                }
             }
         }
-
+        
         updateBoard(g);
         checkForFullRow(g);
         currentBlock.checkForTileBelow(board,ROW);
         currentBlock.checkForFloorBelow();
+        updateBoard(g);
 
         if(!currentBlock.checkForTileUnder(board,ROW)){
             currentBlock.move();
         }
 
+        updateBoard(g);
         currentBlock.draw(g);
         currentBlock.update(g);
+        currentBlock.draw(g);
+        currentBlock.update(g);
+        updateBoard(g);
+        
+        
 
         if(!currentBlock.isItMoving()){
 
@@ -69,7 +77,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             currentBlock.startMoving();
         }
 
-        g.Sleep(SPEED);
+        g.Sleep(100);
     }
 
 }
@@ -98,8 +106,36 @@ void Tetris::updateBoard(SDL_Plotter& g){
     }
 }
 
+void Tetris::setLine(int n){
+    line += n;
+}
+
+int Tetris::getLine(){
+    return line;
+}
+
+void Tetris::setScore(int n){
+    if(n == 1){
+        score += 40;
+    }
+    if(n == 2){
+        score += 100;
+    }
+    if(n == 3){
+        score += 300;
+    }
+    if(n == 4){
+        score += 1200;
+    }
+}
+
+int Tetris::getScore(){
+    return score;
+}
+
 void Tetris::checkForFullRow(SDL_Plotter& g){
     int count;
+    int l = 0;
     for(int i = 0; i < ROW; i++){
         count = 0;
         for(int j = 0; j < COL; j++){
@@ -107,6 +143,9 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
                 count++;
             }
             if(count == COL){
+                setLine(1);
+                l++;
+                setScore(l);
                 for(int k = 0; k < COL; k++){
                     for(int l = i; l > 0; l--){
                         board[l][k].setColor(board[l-1][k].getColor());
@@ -118,19 +157,4 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
         }
     }
 }
-
-void Tetris::displayStartScreen(SDL_Plotter& g){
-
-
-
-
-
-
-
-
-
-
-
-}
-
 
