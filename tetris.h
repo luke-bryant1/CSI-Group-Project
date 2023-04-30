@@ -1,11 +1,21 @@
 #ifndef TETRIS_H_INCLUDED
 #define TETRIS_H_INCLUDED
 
+
+#include <ctime>
+#include <stdlib.h>
+#include <string>
+#include <fstream>
+#include <cassert>
+#include <iostream>
+
 #include "SDL_Plotter.h"
 #include "constants.h"
 #include "tile.h"
 #include "block.h"
+#include "font.h"
 
+using namespace std;
 
 class Tetris{
     private:
@@ -21,6 +31,8 @@ class Tetris{
         void updateBoard(SDL_Plotter& g);
 
         void checkForFullRow(SDL_Plotter& g);
+
+        void displayStartScreen(SDL_Plotter& g);
 
 };
 
