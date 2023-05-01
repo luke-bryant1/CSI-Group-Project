@@ -273,6 +273,8 @@ void Tetris::runTetris(SDL_Plotter& g){
         currentBlock.update(g);
         updateBoard(g);
 
+        currentBlock.checkForEndGame();
+
         if(!currentBlock.isItMoving()){
 
             addBlockToBoard(currentBlock);
@@ -351,6 +353,7 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
                 setLine(1);
                 l++;
                 setScore(l);
+                Mix_PlayChannel(-1, sound, 0);
                 for(int k = 0; k < COL; k++){
                     for(int l = i; l > 0; l--){
                         board[l][k].setColor(board[l-1][k].getColor());
@@ -362,4 +365,3 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
         }
     }
 }
-

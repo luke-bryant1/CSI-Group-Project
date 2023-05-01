@@ -16,6 +16,7 @@ class Block{
     public:
         Block();
         tile tileArray[NUM_TILES];
+        Mix_Chunk * gameover = Mix_LoadWAV("font\\gameover.wav");
 
         point getLocation() const;
         color getColor();
