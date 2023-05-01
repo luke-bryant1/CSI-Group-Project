@@ -309,20 +309,20 @@ void Block::setLocation(const point& a1){
                     b1.x = a1.x - size;
                     b1.y = a1.y;
 
-                    c1.x = a1.x + size;
+                    c1.x = a1.x - size;
                     c1.y = a1.y - size;
 
                     d1.x = a1.x;
-                    d1.y = a1.y - size;
+                    d1.y = a1.y + size;
 
                     break;
 
                 case east:
-                    b1.x = a1.x + size;
+                    b1.x = a1.x - size;
                     b1.y = a1.y;
 
                     c1.x = a1.x + size;
-                    c1.y = a1.y + size;
+                    c1.y = a1.y - size;
 
                     d1.x = a1.x;
                     d1.y = a1.y - size;
@@ -331,11 +331,11 @@ void Block::setLocation(const point& a1){
                     break;
 
                 case south:
-                    b1.x = a1.x - size;
+                    b1.x = a1.x + size;
                     b1.y = a1.y;
 
                     c1.x = a1.x + size;
-                    c1.y = a1.y - size;
+                    c1.y = a1.y + size;
 
                     d1.x = a1.x;
                     d1.y = a1.y - size;
@@ -346,11 +346,11 @@ void Block::setLocation(const point& a1){
                     b1.x = a1.x + size;
                     b1.y = a1.y;
 
-                    c1.x = a1.x + size;
+                    c1.x = a1.x - size;
                     c1.y = a1.y + size;
 
                     d1.x = a1.x;
-                    d1.y = a1.y - size;
+                    d1.y = a1.y + size;
 
                     break;
              }

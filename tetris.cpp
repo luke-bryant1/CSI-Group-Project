@@ -140,7 +140,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             ss.str("");
             ss << currentScore;
             stringScore = ss.str();
-            text.draw(stringScore,g);
+            text.draw(stringScore,g, CYAN);
         }
 
         previousLine = currentLine;
@@ -165,7 +165,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             ss.str("");
             ss << currentLine;
             string stringLines = ss.str();
-            text.draw(stringLines,g);
+            text.draw(stringLines,g, ORANGE);
         }
 
         currentBlock.checkForTileBelow(board,ROW);
