@@ -1,5 +1,75 @@
 #include "tetris.h"
 
+void Tetris::startScreen(SDL_Plotter& g){
+    point p(0,0);
+    Font text;
+
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < 2*COL; j++){
+            if(p.x == 2 * COL * TILE_SIZE){
+                p.x = 0;
+            }
+            fullScreen[i][j].setLocation(p);
+            fullScreen[i][j].setColor(NAVY);
+            fullScreen[i][j].setBorderColor(NAVY);
+            fullScreen[i][j].draw(g);
+            p.x+= TILE_SIZE;
+        }
+        p.y+= TILE_SIZE;
+    }
+
+    //draw yellow border
+    point yellowBorderLoc (25, 210);
+    int length = 450, height = 145;
+    for(int i = 0; i < length; i++){
+        for(int j = 0; j < height; j++){
+            if(i == 0 || i == length - 1 || j == 0 || j == height - 1){
+                g.plotPixel(yellowBorderLoc.x + i, yellowBorderLoc.y + j, YELLOW);
+            }
+        }
+    }
+
+    int tetrisFontSize = 6;
+    point tetrisLoc (50, 220);
+    text.setLoc(tetrisLoc);
+    text.setSize(tetrisFontSize);
+    text.draw("T", g, YELLOW);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("E", g, ORANGE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("T", g, RED);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("R", g, PURPLE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("I", g, BLUE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("S", g, GREEN);
+
+    point startLoc (30, 300);
+    text.setLoc(startLoc);
+    text.setSize(2);
+    text.draw("PRESS SPACE TO START", g, YELLOW);
+
+}
+
+void Tetris::eraseStartScreen(SDL_Plotter& g){
+    point p(0,0);
+
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < 2*COL; j++){
+            if(p.x == 2 * COL * TILE_SIZE){
+                p.x = 0;
+            }
+            fullScreen[i][j].setLocation(p);
+            fullScreen[i][j].setColor(NAVY);
+            fullScreen[i][j].setBorderColor(NAVY);
+            fullScreen[i][j].draw(g);
+            p.x+= TILE_SIZE;
+        }
+        p.y+= TILE_SIZE;
+    }
+
+}
 
 void Tetris::setBoard(SDL_Plotter& g){
     point p(0,0);
@@ -31,6 +101,10 @@ void Tetris::grid(SDL_Plotter& g){
 
 void Tetris::drawRightBoard(SDL_Plotter& g){
     point p(COL * (TILE_SIZE + 1),0);
+    int currentScore = 0, currentLine  = 0;
+    string stringScore = "0", stringLines = "0";
+    stringstream ss;
+    Font text;
 
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
@@ -38,39 +112,35 @@ void Tetris::drawRightBoard(SDL_Plotter& g){
                 p.x = COL * (TILE_SIZE + 1);
             }
             rightBoard[i][j].setLocation(p);
-            rightBoard[i][j].setColor(BACKGROUND);
-            rightBoard[i][j].setBorderColor(BACKGROUND);
-
+            rightBoard[i][j].setColor(NAVY);
+            rightBoard[i][j].setBorderColor(NAVY);
             rightBoard[i][j].draw(g);
-            rightBoard[i][j].setIsOnScreen(false);
             p.x+= TILE_SIZE;
         }
         p.y+= TILE_SIZE;
     }
-}
-
-void Tetris::runTetris(SDL_Plotter& g){
-    char key;
-
-    int currentScore = 0, previousScore = 0,
-        currentLine  = 0, previousLine  = 0;
-    string stringScore = "0", stringLines = "0";
-    stringstream ss;
-    Font text;
-
-    blankTile.setColor(BACKGROUND);
-    blankTile.setBorderColor(BACKGROUND);
 
     point scoreWord (300,100);
     point scoreNum  (300,150);
     point lineWord  (300,200);
     point lineNum   (300,250);
-    point tetrisLoc (285, 25);
 
     //print TETRIS
+    int tetrisFontSize = 3;
+    point tetrisLoc (285, 25);
     text.setLoc(tetrisLoc);
-    text.setSize(3);
-    text.draw("TETRIS", g, GREEN);
+    text.setSize(tetrisFontSize);
+    text.draw("T", g, YELLOW);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("E", g, ORANGE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("T", g, RED);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("R", g, PURPLE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("I", g, BLUE);
+    tetrisLoc.x += tetrisFontSize * 11;
+    text.draw("S", g, GREEN);
 
     //print score as 0
     text.setLoc(scoreWord);
@@ -86,13 +156,31 @@ void Tetris::runTetris(SDL_Plotter& g){
     //print lines as 0
     text.setLoc(lineWord);
     text.setSize(2);
-    text.draw("LINES", g, ORANGE);
+    text.draw("LINES", g, YELLOW);
     text.setLoc(lineNum);
     ss.clear();
     ss.str("");
     ss << currentLine;
     stringLines = ss.str();
-    text.draw(stringLines,g, ORANGE);
+    text.draw(stringLines,g, YELLOW);
+}
+
+void Tetris::runTetris(SDL_Plotter& g){
+    char key;
+
+    int currentScore = 0, previousScore = 0,
+        currentLine  = 0, previousLine  = 0;
+    string stringScore = "0", stringLines = "0";
+    stringstream ss;
+    Font text;
+
+    text.setSize(2);
+
+    point scoreNum  (300,150);
+    point lineNum   (300,250);
+
+    blankTile.setColor(BACKGROUND);
+    blankTile.setBorderColor(BACKGROUND);
 
     while(!g.getQuit()){
         if(g.kbhit()){

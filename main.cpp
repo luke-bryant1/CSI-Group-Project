@@ -7,10 +7,20 @@ int main(int argc, char ** argv){
     SDL_Plotter g(NUM_ROW,NUM_COL);
     Tetris game;
 
-    game.setBoard(g);
+    while(!g.getQuit()){
+        game.startScreen(g);
+        g.update();
 
-    game.drawRightBoard(g);
+        if(g.kbhit()){
+            game.eraseStartScreen(g);
 
-    game.runTetris(g);
+            game.setBoard(g);
+
+            game.drawRightBoard(g);
+
+            game.runTetris(g);
+        }
+    }
 }
+
 

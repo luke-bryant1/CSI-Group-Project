@@ -26,7 +26,12 @@ class Tetris{
     public:
         tile board[ROW][COL];
         tile rightBoard[ROW][COL];
+        tile fullScreen[ROW][COL*2];
         Block currentBlock;
+
+        void startScreen(SDL_Plotter& g);
+        void eraseStartScreen(SDL_Plotter& g);
+
 
         void setBoard(SDL_Plotter& g);
         void grid(SDL_Plotter& g);
