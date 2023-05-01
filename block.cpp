@@ -5,6 +5,7 @@
 using namespace std;
 
 Block::Block(){
+    srand(time(0));
     size = TILE_SIZE;
     isCurrentlyMoving = true;
     orientation = east;
@@ -668,6 +669,7 @@ void Block::checkForFloorBelow(){
         tileArray[2].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
         tileArray[3].getLocation().y == NUM_ROW - 2 * TILE_SIZE ){
         stopMoving();
+        
     }
 }
 
@@ -688,7 +690,6 @@ void Block::startMoving(){
 }
 
 void Block::setRandType(){
-    srand(time(0));
 
     switch(rand() % 7){
         case 0:
@@ -727,11 +728,14 @@ void Block::setRandType(){
 }
 
 void Block::checkForEndGame(){
-    if((isItMoving() == false && tileArray[0].getLocation().y == STARTING_Y) ||
-       (isItMoving() == false && tileArray[1].getLocation().y == STARTING_Y) ||
-       (isItMoving() == false && tileArray[2].getLocation().y == STARTING_Y) ||
-       (isItMoving() == false && tileArray[3].getLocation().y == STARTING_Y)){
-        setColor(BACKGROUND);
+    if((isItMoving() == false && (tileArray[0].getLocation().y == TILE_SIZE-100 || tileArray[0].getLocation().y < TILE_SIZE-100)) ||
+       (isItMoving() == false && (tileArray[1].getLocation().y == TILE_SIZE-100 || tileArray[1].getLocation().y < TILE_SIZE-100)) ||
+       (isItMoving() == false && (tileArray[2].getLocation().y == TILE_SIZE-100 || tileArray[2].getLocation().y < TILE_SIZE-100)) ||
+       (isItMoving() == false && (tileArray[3].getLocation().y == TILE_SIZE-100 || tileArray[3].getLocation().y < TILE_SIZE-100))){
+        Mix_PlayChannel(-1, gameover, 0);
+        SDL_Delay(1500);
+        Mix_HaltMusic();
+        SDL_Quit();
     }
 
 }
