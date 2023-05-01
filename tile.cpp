@@ -26,18 +26,18 @@ void tile::move(){
 void tile::draw(SDL_Plotter& g){
     color currColor;
     //erase
-    for(int r = 0; r < size; r++){ //"size" comes from inside the object
+    for(int r = 0; r < size; r++){
         for(int c = 0; c < size; c++){
-            g.plotPixel(prevLoc.x + c, prevLoc.y + r, BACKGROUND); //this erases the previous location
+            g.plotPixel(prevLoc.x + c, prevLoc.y + r, BACKGROUND);
         }
     }
 
     //draw
-    for(int r = 0; r < size; r++){ //"size" comes from inside the object
+    for(int r = 0; r < size; r++){
         for(int c = 0; c < size; c++){
             currColor = shade;
             if(c == 0 || r == 0 || r == size - 1 || c == size - 1){
-                currColor = LIGHTGRAY; //This adds a black boarder around the edge of the tile
+                currColor = borderColor;
             }
             g.plotPixel(loc.x + c, loc.y + r, currColor); //this draws the square
         }
@@ -50,6 +50,9 @@ point tile::getLocation() const{
 }
 color tile::getColor() const{
     return shade;
+}
+color tile::getBorderColor(){
+    return borderColor;
 }
 int tile::getSize() const{
     return size;
@@ -66,7 +69,9 @@ void tile::setLocation(const point& p){
 }
 void tile::setColor(const color& c){
     shade = c;
-    return;
+}
+void tile::setBorderColor(color c){
+    borderColor = c;
 }
 void tile::setSize(int s){
     size = s;

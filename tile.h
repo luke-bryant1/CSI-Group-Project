@@ -7,7 +7,7 @@
 class tile{
     private:
         point loc, prevLoc;
-        color shade;
+        color shade, borderColor;
         int size;
         bool onTheMove;
         bool isOnScreen;
@@ -19,7 +19,10 @@ class tile{
 
         point getLocation() const;
         color getColor() const;
+        color getBorderColor();
         int getSize() const;
+
+        void setBorderColor(color);
 
         void setLocation(const point&);
         void setColor(const color&);

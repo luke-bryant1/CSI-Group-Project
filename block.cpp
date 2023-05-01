@@ -12,12 +12,7 @@ Block::Block(){
     loc.x = STARTING_X;
     loc.y = STARTING_Y;
 
-    //*I think the randomizing functions need to be redone somehow using time. (Sometimes I get weird patterns with the blocks.)
-    // I just forgot how to do that lol.
-
-    //This builds the block with a random block type
     setRandType();
-
 }
 
 void Block::moveLeft(){
@@ -71,7 +66,7 @@ void Block::draw(SDL_Plotter& g){
 point Block::getLocation() const{
     return loc;
 }
-color Block::getColor() const{
+color Block::getColor() {
     return shade;
 }
 int Block::getSize() const{
@@ -321,12 +316,18 @@ void Block::setColor(const color& c){
     tileArray[1].setColor(c);
     tileArray[2].setColor(c);
     tileArray[3].setColor(c);
-    return;
+    shade = c;
 }
 
 void Block::setSize(int s){
     size = s;
-    return;
+}
+void Block::setBorderColor(color c){
+    tileArray[0].setBorderColor(c);
+    tileArray[1].setBorderColor(c);
+    tileArray[2].setBorderColor(c);
+    tileArray[3].setBorderColor(c);
+    borderColor = c;
 }
 
 void Block::setType(blockType input_type){
@@ -559,5 +560,15 @@ void Block::setRandType(){
     }
     setType(type);
     setColor(shade);
+    setBorderColor(BACKGROUND);
 }
 
+void Block::checkForEndGame(){
+    if((isItMoving() == false && tileArray[0].getLocation().y == STARTING_Y) ||
+       (isItMoving() == false && tileArray[1].getLocation().y == STARTING_Y) ||
+       (isItMoving() == false && tileArray[2].getLocation().y == STARTING_Y) ||
+       (isItMoving() == false && tileArray[3].getLocation().y == STARTING_Y)){
+        setColor(BACKGROUND);
+    }
+
+}

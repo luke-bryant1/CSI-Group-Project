@@ -7,7 +7,7 @@
 class Block{
     private:
         point loc;
-        color shade;
+        color shade, borderColor;
         blockType type;
         direction orientation;
         int size = TILE_SIZE;
@@ -18,7 +18,7 @@ class Block{
         tile tileArray[NUM_TILES];
 
         point getLocation() const;
-        color getColor() const;
+        color getColor();
         int getSize() const;
 
         bool isItMoving() const;
@@ -26,6 +26,7 @@ class Block{
         void setLocation(const point&);
         void setColor(const color&);
         void setSize(int);
+        void setBorderColor(color);
 
         void setType(blockType);
         void switchType();
@@ -48,6 +49,8 @@ class Block{
         void rotate(); // This rotates blocks *clockwise*
 
         void setRandType();
+
+        void checkForEndGame();
 
 
 

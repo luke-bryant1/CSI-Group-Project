@@ -10,7 +10,7 @@ const int NUM_ROW = TILE_SIZE * ROW;
 const int NUM_COL = TILE_SIZE * COL * 2;
 
 const int STARTING_X    = TILE_SIZE * 4;
-const int STARTING_Y    = TILE_SIZE * 3;
+const int STARTING_Y    = TILE_SIZE - 100;
 
 const point START_POINT(STARTING_X, STARTING_Y);
 
