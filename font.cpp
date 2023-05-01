@@ -28,13 +28,13 @@ void letter::display(ostream& out){
     }
 }
 
-void letter::draw(int n, point p, SDL_Plotter& g){
+void letter::draw(int n, point p, SDL_Plotter& g, color letterColor){
     for(int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
             if(data[r][c] == '1'){
                 for(int xOff = 0; xOff < n; xOff++){
                     for(int yOff = 0; yOff < n; yOff++){
-                        g.plotPixel(xOff + p.x + c * n, yOff + p.y + r * n,0,0,0);
+                        g.plotPixel(xOff + p.x + c * n, yOff + p.y + r * n,letterColor);
                     }
                 }
             }
@@ -76,13 +76,13 @@ void Font::display(char c, ostream& out){
     data[c].display(out);
 }
 
-void Font::draw(char c, SDL_Plotter& g){
-    data[c].draw(size,loc, g);
+void Font::draw(char c, SDL_Plotter& g, color shade){
+    data[c].draw(size,loc, g, shade);
 }
 
-void Font::draw(string word, SDL_Plotter& g){
+void Font::draw(string word, SDL_Plotter& g, color shade){
     for(int i = 0; i < word.size(); i++){
-        draw(word.at(i), g);
+        draw(word.at(i), g, shade);
         loc.x += size * 11;
     }
 }

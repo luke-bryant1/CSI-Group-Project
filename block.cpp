@@ -196,6 +196,59 @@ void Block::setLocation(const point& a1){
 
             break;
 
+        case l_shape_opp:
+             switch(orientation){
+                case north:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x + size;
+                    c1.y = a1.y;
+
+                    d1.x = a1.x + size;
+                    d1.y = a1.y + size;
+
+                    break;
+
+                case east:
+                    b1.x = a1.x;
+                    b1.y = a1.y - size;
+
+                    c1.x = a1.x - size;
+                    c1.y = a1.y + size;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y + size;
+
+                    break;
+
+                case south:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x - size;
+                    c1.y = a1.y;
+
+                    d1.x = a1.x - size;
+                    d1.y = a1.y - size;
+
+                    break;
+
+                case west:
+                    b1.x = a1.x;
+                    b1.y = a1.y + size;
+
+                    c1.x = a1.x;
+                    c1.y = a1.y - size;
+
+                    d1.x = a1.x + size;
+                    d1.y = a1.y - size;
+
+                    break;
+             }
+
+            break;
+
         case z_shape:
             switch(orientation){
                 case north:
@@ -241,6 +294,60 @@ void Block::setLocation(const point& a1){
 
                     c1.x = a1.x - size;
                     c1.y = a1.y - size;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
+
+                    break;
+             }
+
+            break;
+
+        case z_shape_opp:
+            switch(orientation){
+                case north:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x + size;
+                    c1.y = a1.y - size;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
+
+                    break;
+
+                case east:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x + size;
+                    c1.y = a1.y + size;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
+
+
+                    break;
+
+                case south:
+                    b1.x = a1.x - size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x + size;
+                    c1.y = a1.y - size;
+
+                    d1.x = a1.x;
+                    d1.y = a1.y - size;
+
+                    break;
+
+                case west:
+                    b1.x = a1.x + size;
+                    b1.y = a1.y;
+
+                    c1.x = a1.x + size;
+                    c1.y = a1.y + size;
 
                     d1.x = a1.x;
                     d1.y = a1.y - size;
@@ -339,15 +446,21 @@ void Block::switchType(){
             setType(square);
             break;
         case square:
-            setType(bar);
+            setType(l_shape);
             break;
         case l_shape:
             setType(t_shape);
             break;
         case t_shape:
-            setType(l_shape);
+            setType(z_shape);
             break;
         case z_shape:
+            setType(l_shape_opp);
+            break;
+        case l_shape_opp:
+            setType(z_shape_opp);
+            break;
+        case z_shape_opp:
             break;
     }
 }
@@ -402,6 +515,25 @@ void Block::rotate(){
 
             break;
 
+        case l_shape_opp:
+
+            switch(orientation){
+                case north:
+                    orientation = east;
+                    break;
+                case east:
+                    orientation = south;
+                    break;
+                case south:
+                    orientation = west;
+                    break;
+                case west:
+                    orientation = north;
+                    break;
+            }
+
+            break;
+
         case z_shape:
 
             switch(orientation){
@@ -420,6 +552,27 @@ void Block::rotate(){
             }
 
             break;
+
+        case z_shape_opp:
+
+            switch(orientation){
+                case north:
+                    orientation = east;
+                    break;
+                case east:
+                    orientation = south;
+                    break;
+                case south:
+                    orientation = west;
+                    break;
+                case west:
+                    orientation = north;
+                    break;
+            }
+
+            break;
+
+
 
         case t_shape:
 
@@ -536,7 +689,8 @@ void Block::startMoving(){
 
 void Block::setRandType(){
     srand(time(0));
-    switch(rand() % 5){
+
+    switch(rand() % 7){
         case 0:
             type  = bar;
             shade = CYAN;
@@ -557,6 +711,15 @@ void Block::setRandType(){
             type  = z_shape;
             shade = PURPLE;
             break;
+        case 5:
+            type  = l_shape_opp;
+            shade = GREEN;
+            break;
+        case 6:
+            type  = z_shape_opp;
+            shade = ORANGE;
+            break;
+
     }
     setType(type);
     setColor(shade);

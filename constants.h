@@ -29,7 +29,7 @@ const color BACKGROUND = color(127, 127, 127);
 
 const int MAX_FONT_SIZE = 25;
 
-enum blockType {bar, square, l_shape, t_shape, z_shape};
+enum blockType {bar, square, l_shape, l_shape_opp, t_shape, z_shape, z_shape_opp};
 enum direction {north, east, south, west};
 
 

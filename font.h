@@ -15,7 +15,9 @@ class letter{
 
         void display(ostream& );
 
-        void draw(int, point, SDL_Plotter&);
+        void setLetterColor(color);
+
+        void draw(int, point, SDL_Plotter& g, color = BLACK);
 
 };
 
@@ -34,9 +36,9 @@ class Font{
 
         void display(char, ostream& out = cout);
 
-        void draw(char, SDL_Plotter& g);
+        void draw(char, SDL_Plotter& g, color = BLACK);
 
-        void draw(string, SDL_Plotter& g);
+        void draw(string, SDL_Plotter& g, color = BLACK);
 
 
 
