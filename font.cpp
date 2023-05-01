@@ -83,7 +83,7 @@ void Font::draw(char c, SDL_Plotter& g, color shade){
 void Font::draw(string word, SDL_Plotter& g, color shade){
     for(int i = 0; i < word.size(); i++){
         draw(word.at(i), g, shade);
-        loc.x += size * 11;
+        loc.x += size * 9;
     }
 }
 
