@@ -10,14 +10,13 @@ class Block{
         color shade, borderColor;
         blockType type;
         direction orientation;
-        direction previousOrientation;
         int size = TILE_SIZE;
         bool isCurrentlyMoving;
 
     public:
         Block();
-        tile tileArray[NUM_TILES];
         Mix_Chunk * gameover = Mix_LoadWAV("gameover.wav");
+        tile tileArray[NUM_TILES];
 
         point getLocation() const;
         color getColor();
@@ -48,15 +47,11 @@ class Block{
         void moveLeft();
         void moveRight();
         void moveDown();
-        void rotate(tile board[][COL], int);
+        void rotate(); // This rotates blocks *clockwise*
 
         void setRandType();
 
-        bool validPosition(tile board[][COL], int);
-
-        bool checkForEndGame();
-
-
+        void checkForEndGame();
 
 
 
