@@ -407,37 +407,22 @@ void Tetris::endGame(SDL_Plotter& g){
         p.y+= TILE_SIZE;
     }
 
-    //draw yellow border
-    point yellowBorderLoc (25, 210);
-    int length = 450, height = 120;
-    for(int i = 0; i < length; i++){
-        for(int j = 0; j < height; j++){
-            if(i == 0 || i == length - 1 || j == 0 || j == height - 1){
-                g.plotPixel(yellowBorderLoc.x + i, yellowBorderLoc.y + j, YELLOW);
-            }
-        }
-    }
 
-    int tetrisFontSize = 8;
-    point tetrisLoc (40, 220);
-    text.setLoc(tetrisLoc);
+    int tetrisFontSize = 10;
+    point gameloc (85, 140);
+    text.setLoc(gameloc);
     text.setSize(tetrisFontSize);
-    text.draw("D", g, YELLOW);
-    tetrisLoc.x += tetrisFontSize * 11;
-    text.draw("E", g, ORANGE);
-    tetrisLoc.x += tetrisFontSize * 11;
-    text.draw("T", g, RED);
-    tetrisLoc.x += tetrisFontSize * 11;
-    text.draw("R", g, PURPLE);
-    tetrisLoc.x += tetrisFontSize * 11;
-    text.draw("I", g, BLUE);
-    tetrisLoc.x += tetrisFontSize * 11;
-    text.draw("S", g, GREEN);
+    text.draw("GAME", g, RED);
+    
+    point endloc (85, 240);
+    text.setLoc(endloc);
+    text.setSize(tetrisFontSize);
+    text.draw("OVER", g, RED);
 
-    point startLoc (75, 300);
-    text.setLoc(startLoc);
+    point replayloc (30, 380);
+    text.setLoc(replayloc);
     text.setSize(2);
-    text.draw("balls", g, YELLOW);
+    text.draw("PRESS SPACE TO PLAY AGAIN", g, YELLOW);
 
 }
 
