@@ -214,10 +214,16 @@ void Tetris::runTetris(SDL_Plotter& g){
         currentScore = getScore();
 
         if(currentScore > previousScore){
-            for(int i = 0; i < 5;i++){
-                blankTile.setLocation(scoreNum);
-                blankTile.erase(g);
-                scoreNum.x += TILE_SIZE;
+            for(int i = 0; i < 2;i++){
+                for(int j = 0; j < 10; j++){
+                    if(scoreNum.x == 9 * TILE_SIZE){
+                        scoreNum.x = 300;
+                    }
+                    blankTile.setLocation(scoreNum);
+                    blankTile.erase(g);
+                    lineNum.x += TILE_SIZE;
+                }
+                lineNum.y += TILE_SIZE;
             }
 
             scoreNum.x = 300;
@@ -239,10 +245,16 @@ void Tetris::runTetris(SDL_Plotter& g){
         currentLine = getLine();
 
         if(currentLine > previousLine){
-            for(int i = 0; i < 15;i++){
-                blankTile.setLocation(lineNum);
-                blankTile.erase(g);
-                lineNum.x += TILE_SIZE;
+            for(int i = 0; i < 3;i++){
+                for(int j = 0; j < 10; j++){
+                    if(lineNum.x == 9 * TILE_SIZE){
+                        lineNum.x = 300;
+                    }
+                    blankTile.setLocation(lineNum);
+                    blankTile.erase(g);
+                    lineNum.x += TILE_SIZE;
+                }
+                lineNum.y += TILE_SIZE;
             }
 
             lineNum.x = 300;
@@ -253,7 +265,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             ss.str("");
             ss << currentLine;
             string stringLines = ss.str();
-            text.draw(stringLines,g, ORANGE);
+            text.draw(stringLines,g, YELLOW);
         }
 
         currentBlock.checkForTileBelow(board,ROW);
@@ -282,7 +294,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             currentBlock.update(g);
             currentBlock.startMoving();
         }
-        g.Sleep(SPEED);
+        //g.Sleep(SPEED);
     }
 }
 

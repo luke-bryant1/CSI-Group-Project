@@ -28,7 +28,7 @@ class Tetris{
         tile rightBoard[ROW][COL];
         tile fullScreen[ROW][COL*2];
         Block currentBlock;
-        Mix_Chunk * sound = Mix_LoadWAV("font\\clear.wav");
+        Mix_Chunk * sound = Mix_LoadWAV("clear.wav");
 
         void startScreen(SDL_Plotter& g);
         void eraseStartScreen(SDL_Plotter& g);

@@ -1,6 +1,6 @@
 #include "block.h"
-#include <cstdlib>
-#include <ctime>
+//#include <cstdlib>
+//#include <ctime>
 
 using namespace std;
 
@@ -47,7 +47,10 @@ void Block::moveDown(){
 }
 
 void Block::move(){
-    if(getLocation().y <= NUM_ROW - TILE_SIZE){
+    static int count = 0;
+    count++;
+    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 10){
+        count = 0;
         point p = getLocation();
         p.y += TILE_SIZE;
         setLocation(p);
@@ -474,6 +477,8 @@ void Block::rotate(){
     // example, a square has 1 orientation, and a bar has 2, and the others have 4. That is why we will have to have switch statements to
     // determine the type of block and to switch between the certain number of orientations.
     // *Direction of rotation is clockwise.
+   // previousOrientation = orientation;
+
     switch(type){
         case bar:
 
@@ -593,7 +598,9 @@ void Block::rotate(){
 
             break;
     }
-
+//    if(!validPosition()){
+//        orientation = previousOrientation;
+//    }
 }
 bool Block::isItMoving() const{
     return isCurrentlyMoving;
@@ -688,8 +695,6 @@ void Block::startMoving(){
 }
 
 void Block::setRandType(){
-    srand(time(0));
-
     switch(rand() % 7){
         case 0:
             type  = bar;
