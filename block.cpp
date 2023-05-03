@@ -1,11 +1,10 @@
 #include "block.h"
-#include <cstdlib>
-#include <ctime>
+//#include <cstdlib>
+//#include <ctime>
 
 using namespace std;
 
 Block::Block(){
-    srand(time(0));
     size = TILE_SIZE;
     isCurrentlyMoving = true;
     orientation = east;
@@ -48,7 +47,10 @@ void Block::moveDown(){
 }
 
 void Block::move(){
-    if(getLocation().y <= NUM_ROW - TILE_SIZE){
+    static int count = 0;
+    count++;
+    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 10){
+        count = 0;
         point p = getLocation();
         p.y += TILE_SIZE;
         setLocation(p);
@@ -470,14 +472,10 @@ void Block::update(SDL_Plotter& g){
     g.update();
 }
 
-void Block::rotate(){
-    // This function rotates the block. Based on the type of the block there are a different number of orientations the block can have. For
-    // example, a square has 1 orientation, and a bar has 2, and the others have 4. That is why we will have to have switch statements to
-    // determine the type of block and to switch between the certain number of orientations.
-    // *Direction of rotation is clockwise.
+void Block::rotate(tile board[][COL], int ROW){
+    previousOrientation = orientation;
     switch(type){
         case bar:
-
             switch(orientation){
                 case north:
                     orientation = south;
@@ -573,8 +571,6 @@ void Block::rotate(){
 
             break;
 
-
-
         case t_shape:
 
             switch(orientation){
@@ -594,7 +590,11 @@ void Block::rotate(){
 
             break;
     }
-
+    setLocation(loc);
+    if(!validPosition(board,ROW)){
+        orientation = previousOrientation;
+    }
+    setLocation(loc);
 }
 bool Block::isItMoving() const{
     return isCurrentlyMoving;
@@ -664,12 +664,11 @@ bool Block::checkForTileRight(tile board[][COL], int ROW){
 }
 
 void Block::checkForFloorBelow(){
-    if( tileArray[0].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
-        tileArray[1].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
-        tileArray[2].getLocation().y == NUM_ROW - 2 * TILE_SIZE ||
-        tileArray[3].getLocation().y == NUM_ROW - 2 * TILE_SIZE ){
+    if( tileArray[0].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[1].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[2].getLocation().y == NUM_ROW - TILE_SIZE ||
+        tileArray[3].getLocation().y == NUM_ROW - TILE_SIZE ){
         stopMoving();
-        
     }
 }
 
@@ -690,7 +689,6 @@ void Block::startMoving(){
 }
 
 void Block::setRandType(){
-
     switch(rand() % 7){
         case 0:
             type  = bar;
@@ -727,15 +725,36 @@ void Block::setRandType(){
     setBorderColor(BACKGROUND);
 }
 
-void Block::checkForEndGame(){
+bool Block::validPosition(tile board[][COL], int ROW){
+    bool validPosition = true;
+    for(int i = 0; i < ROW; i++){
+        for(int j = 0; j < COL; j++){
+            if(board[i][j].getIsOnScreen()){
+                if(tileArray[0].getLocation().x == board[i][j].getLocation().x ||
+                   tileArray[0].getLocation().y == board[i][j].getLocation().y ||
+                   tileArray[1].getLocation().x == board[i][j].getLocation().x ||
+                   tileArray[1].getLocation().y == board[i][j].getLocation().y ||
+                   tileArray[2].getLocation().x == board[i][j].getLocation().x ||
+                   tileArray[2].getLocation().y == board[i][j].getLocation().y ||
+                   tileArray[3].getLocation().x == board[i][j].getLocation().x ||
+                   tileArray[3].getLocation().y == board[i][j].getLocation().y){
+                    validPosition = false;
+                }
+            }
+        }
+    }
+    return validPosition;
+}
+
+
+bool Block::checkForEndGame(){
+    bool isEndGame = false;
     if((isItMoving() == false && (tileArray[0].getLocation().y == TILE_SIZE-100 || tileArray[0].getLocation().y < TILE_SIZE-100)) ||
        (isItMoving() == false && (tileArray[1].getLocation().y == TILE_SIZE-100 || tileArray[1].getLocation().y < TILE_SIZE-100)) ||
        (isItMoving() == false && (tileArray[2].getLocation().y == TILE_SIZE-100 || tileArray[2].getLocation().y < TILE_SIZE-100)) ||
        (isItMoving() == false && (tileArray[3].getLocation().y == TILE_SIZE-100 || tileArray[3].getLocation().y < TILE_SIZE-100))){
-        Mix_PlayChannel(-1, gameover, 0);
-        SDL_Delay(1500);
-        Mix_HaltMusic();
-        SDL_Quit();
+        isEndGame = true;
     }
-
+    return isEndGame;
 }
+
