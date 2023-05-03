@@ -440,3 +440,4 @@ void Tetris::endGame(SDL_Plotter& g){
     text.draw("balls", g, YELLOW);
 
 }
+
