@@ -56,10 +56,6 @@ class Block{
 
         bool checkForEndGame();
 
-
-
-
-
 };
 
 #endif // BLOCK_H_INCLUDED

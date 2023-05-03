@@ -1,6 +1,4 @@
 #include "block.h"
-//#include <cstdlib>
-//#include <ctime>
 
 using namespace std;
 
@@ -49,7 +47,7 @@ void Block::moveDown(){
 void Block::move(){
     static int count = 0;
     count++;
-    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 10){
+    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 20){
         count = 0;
         point p = getLocation();
         p.y += TILE_SIZE;
@@ -593,8 +591,9 @@ void Block::rotate(tile board[][COL], int ROW){
     setLocation(loc);
     if(!validPosition(board,ROW)){
         orientation = previousOrientation;
+        setLocation(loc);
     }
-    setLocation(loc);
+
 }
 bool Block::isItMoving() const{
     return isCurrentlyMoving;
@@ -730,14 +729,14 @@ bool Block::validPosition(tile board[][COL], int ROW){
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
             if(board[i][j].getIsOnScreen()){
-                if(tileArray[0].getLocation().x == board[i][j].getLocation().x ||
-                   tileArray[0].getLocation().y == board[i][j].getLocation().y ||
-                   tileArray[1].getLocation().x == board[i][j].getLocation().x ||
-                   tileArray[1].getLocation().y == board[i][j].getLocation().y ||
-                   tileArray[2].getLocation().x == board[i][j].getLocation().x ||
-                   tileArray[2].getLocation().y == board[i][j].getLocation().y ||
-                   tileArray[3].getLocation().x == board[i][j].getLocation().x ||
-                   tileArray[3].getLocation().y == board[i][j].getLocation().y){
+                if((tileArray[0].getLocation().x == board[i][j].getLocation().x && tileArray[0].getLocation().y == board[i][j].getLocation().y ) ||
+                   (tileArray[1].getLocation().x == board[i][j].getLocation().x && tileArray[1].getLocation().y == board[i][j].getLocation().y ) ||
+                   (tileArray[2].getLocation().x == board[i][j].getLocation().x && tileArray[2].getLocation().y == board[i][j].getLocation().y ) ||
+                   (tileArray[3].getLocation().x == board[i][j].getLocation().x && tileArray[3].getLocation().y == board[i][j].getLocation().y ) ||
+                    tileArray[0].getLocation().x < 0 || tileArray[1].getLocation().x < 0 ||
+                    tileArray[2].getLocation().x < 0 || tileArray[3].getLocation().x < 0 ||
+                    tileArray[0].getLocation().x > COL * (TILE_SIZE - 1) || tileArray[1].getLocation().x > COL * (TILE_SIZE - 1)  ||
+                    tileArray[2].getLocation().x > COL * (TILE_SIZE - 1)  || tileArray[3].getLocation().x > COL * (TILE_SIZE - 1) ){
                     validPosition = false;
                 }
             }

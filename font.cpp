@@ -45,13 +45,13 @@ void letter::draw(int n, point p, SDL_Plotter& g, color letterColor){
 Font::Font(){
     string fname;
     for(char c = 'A'; c <= 'Z'; c++){
-        fname = "";
+        fname = "font\\";
         fname += c;
         fname += ".txt";
         data[c].init(fname);
     }
     for(char c = '0'; c <= '9'; c++){
-        fname = "";
+        fname = "font\\";
         fname += c;
         fname += ".txt";
         data[c].init(fname);
