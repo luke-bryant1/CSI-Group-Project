@@ -165,8 +165,9 @@ void Tetris::drawRightBoard(SDL_Plotter& g){
     text.draw(stringLines,g, YELLOW);
 }
 
-void Tetris::runTetris(SDL_Plotter& g){
+bool Tetris::runTetris(SDL_Plotter& g){
     char key;
+    bool gameOver = false;
 
     int currentScore = 0, previousScore = 0,
         currentLine  = 0, previousLine  = 0;
@@ -182,7 +183,10 @@ void Tetris::runTetris(SDL_Plotter& g){
     blankTile.setColor(NAVY);
     blankTile.setBorderColor(NAVY);
 
-    while(!g.getQuit()){
+    g.initSound("clear.wav");
+    g.initSound("Tetris.mp3");
+
+    while(!g.getQuit() && !gameOver){
         if(g.kbhit()){
             while(key = g.getKey()){
                 switch(key){
@@ -201,7 +205,15 @@ void Tetris::runTetris(SDL_Plotter& g){
                             currentBlock.moveDown();
                         }
                         break;
-                    case UP_ARROW: currentBlock.rotate();
+                    case UP_ARROW:
+                            currentBlock.rotate(board,ROW);
+                        break;
+                    case ' ':
+                        for(int i = 0; i < ROW; i++){
+                            if(!currentBlock.checkForTileUnder(board,ROW)){
+                                currentBlock.moveDown();
+                            }
+                        }
                         break;
                 }
             }
@@ -221,9 +233,9 @@ void Tetris::runTetris(SDL_Plotter& g){
                     }
                     blankTile.setLocation(scoreNum);
                     blankTile.erase(g);
-                    lineNum.x += TILE_SIZE;
+                    scoreNum.x += TILE_SIZE;
                 }
-                lineNum.y += TILE_SIZE;
+                scoreNum.y += TILE_SIZE;
             }
 
             scoreNum.x = 300;
@@ -235,6 +247,7 @@ void Tetris::runTetris(SDL_Plotter& g){
             ss << currentScore;
             stringScore = ss.str();
             text.draw(stringScore,g, CYAN);
+            g.playSound("clear.wav");
         }
 
         previousLine = currentLine;
@@ -277,15 +290,13 @@ void Tetris::runTetris(SDL_Plotter& g){
         }
 
         grid(g);
-        updateBoard(g);
-        currentBlock.draw(g);
-        currentBlock.update(g);
-        grid(g);
         currentBlock.draw(g);
         currentBlock.update(g);
         updateBoard(g);
 
-        currentBlock.checkForEndGame();
+        if(currentBlock.checkForEndGame()){
+            gameOver = true;
+        }
 
         if(!currentBlock.isItMoving()){
             addBlockToBoard(currentBlock);
@@ -294,8 +305,9 @@ void Tetris::runTetris(SDL_Plotter& g){
             currentBlock.update(g);
             currentBlock.startMoving();
         }
-        //g.Sleep(SPEED);
+        g.Sleep(SPEED);
     }
+    return gameOver;
 }
 
 void Tetris::addBlockToBoard(Block inputBlock){
@@ -362,7 +374,7 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
                 setLine(1);
                 l++;
                 setScore(l);
-                Mix_PlayChannel(-1, sound, 0);
+
                 for(int k = 0; k < COL; k++){
                     for(int l = i; l > 0; l--){
                         board[l][k].setColor(board[l-1][k].getColor());

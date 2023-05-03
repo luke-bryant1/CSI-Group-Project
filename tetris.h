@@ -38,7 +38,7 @@ class Tetris{
         void grid(SDL_Plotter& g);
 
         void drawRightBoard(SDL_Plotter& g);
-        void runTetris(SDL_Plotter& g);
+        bool runTetris(SDL_Plotter& g);
 
         void addBlockToBoard(Block);
         void updateBoard(SDL_Plotter& g);

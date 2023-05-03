@@ -14,7 +14,7 @@ const int STARTING_Y    = TILE_SIZE - 100;
 
 const point START_POINT(STARTING_X, STARTING_Y);
 
-const int SPEED = 150; //This controls the speed that the block falls (the higher the number the slower)
+const int SPEED = 1; //This controls the speed that the block falls (the higher the number the slower)
 
 const color RED        = color(255, 0, 0);
 const color ORANGE     = color(255, 165, 0);

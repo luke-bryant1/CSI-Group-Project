@@ -45,7 +45,7 @@ void tile::draw(SDL_Plotter& g){
     prevLoc = loc;
 }
 void tile::erase(SDL_Plotter& g){
-    for(int r = 0; r < size; r++){
+    for(int r = 0; r <  2 * size; r++){
         for(int c = 0; c < size; c++){
             g.plotPixel(loc.x + c, loc.y + r, NAVY);
         }
