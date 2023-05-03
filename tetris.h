@@ -24,17 +24,22 @@ class Tetris{
         int score = 0;
 
     public:
-        Mix_Chunk * sound = Mix_LoadWAV("clear.wav");
         tile board[ROW][COL];
         tile rightBoard[ROW][COL];
+        tile fullScreen[ROW][COL*2];
         Block currentBlock;
+        Mix_Chunk * sound = Mix_LoadWAV("clear.wav");
+
+        void startScreen(SDL_Plotter& g);
+        void eraseStartScreen(SDL_Plotter& g);
+
 
         void setBoard(SDL_Plotter& g);
         void grid(SDL_Plotter& g);
 
         void drawRightBoard(SDL_Plotter& g);
-        void runTetris(SDL_Plotter& g);
-    
+        bool runTetris(SDL_Plotter& g);
+
         void addBlockToBoard(Block);
         void updateBoard(SDL_Plotter& g);
 
@@ -45,7 +50,7 @@ class Tetris{
 
         void setScore(int);
         int getScore();
-
+        void endGame(SDL_Plotter& g);
 };
 
 
