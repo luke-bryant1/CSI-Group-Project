@@ -33,6 +33,7 @@ class tile{
         void stopMoving();
         void startMoving();
 
+        void erase(SDL_Plotter& g);
         void draw(SDL_Plotter& g);
         void move();
         void moveLeft();
