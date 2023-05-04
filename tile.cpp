@@ -1,28 +1,5 @@
 #include "tile.h"
 
-
-void tile::moveLeft(){
-    point p = getLocation();
-    p.x -= size; //moves the tile left by one tile
-    setLocation(p);
-}
-void tile::moveRight(){
-    point p = getLocation();
-    p.x += size; //moves the tile right by one tile
-    setLocation(p);
-}
-void tile::moveDown(){
-    point p = getLocation();
-    p.y += size; //moves the tile down by one tile
-    setLocation(p);
-}
-
-void tile::move(){
-    point p = getLocation();
-    p.y += size; //makes it fall one tile space at a time
-    setLocation(p);
-}
-
 void tile::draw(SDL_Plotter& g){
     color currColor;
     //erase
