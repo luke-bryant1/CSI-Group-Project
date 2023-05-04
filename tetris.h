@@ -29,33 +29,149 @@ class Tetris{
         tile fullScreen[ROW][COL*2];
         Block currentBlock;
 
+        /*
+         description: display start screen
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: start screen is displayed to the plotter
+         */
         void startScreen(SDL_Plotter& g);
+    
+        /*
+         description:erase the start screen
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: the start screen is erased from the plotter
+         */
         void eraseStartScreen(SDL_Plotter& g);
-
+    
+        /*
+         description: draws Tetris game screen (left side)
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: the Tetris game screen is drawn on the plotter
+         */
         void setBoard(SDL_Plotter& g);
+    
+        /*
+         description: draws grid for the Tetris screen
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: the grid is drawn for the Tetris game screen
+         */
         void grid(SDL_Plotter& g);
 
+        /*
+         description: draws right side of game screen
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: the right side of the game screen is drawn on the plotter
+         */
         void drawRightBoard(SDL_Plotter& g);
+    
+        /*
+         description: returns true if the game is running
+         return: bool
+         precondition: SDL_Plotter is valid
+         postcondition: returns true if the game is true
+         */
         bool runTetris(SDL_Plotter& g);
-
+    
+        /*
+         description: displays the Tetris blocks on the screen
+         return: void
+         precondition: Block function is valid
+         postcondition: draws a Tetris block onto the plotter
+         */
         void addBlockToBoard(Block);
+    
+        /*
+         description: refreshes the screen every time the block falls
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: refreshes the screen on the plotter
+         */
         void updateBoard(SDL_Plotter& g);
 
+        /*
+         description: checks if the row is full
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: checks if there is a full row on the game screen
+         */
         void checkForFullRow(SDL_Plotter& g);
 
+        /*
+         description: increases the number of lines cleared
+         return: void
+         precondition: int is valid
+         postcondition: set line += 1
+         */
         void setLine(int);
+    
+        /*
+         description: return the value of line
+         return: int
+         precondition: getLine is called
+         postcondition: the value of line is returned
+         */
         int getLine();
 
+        /*
+         description: increments the current score
+         return: void
+         precondition: int is valid
+         postcondition: increase score value
+         */
         void setScore(int);
+    
+        /*
+         description: return the current score
+         return: int
+         precondition: getScore is called
+         postcondition: the value of score is returned
+         */
         int getScore();
+    
+        /*
+         description: shows endgame screen
+         return: void
+         precondition: SDL_Plotter is valid
+         postcondition: the endgame screen is drawn on the plotter
+         */
         void endGame(SDL_Plotter& g);
 
-        void drawScore(point p, SDL_Plotter& g, int, int size);
+        /*
+         description: the score is drawn on the right side of the game screen
+         return: void
+         precondition: SDL_Plotter, point location, and the score value is valid
+         postcondition: draws the score on the right side of the screen
+         */
+        void drawScore(point p, SDL_Plotter& g, int);
+    
+        /*
+         description: draws a background color tile on top of the score
+         return: void
+         precondition: SDL_Plotter and point p is valid
+         postcondition: score is erased
+         */
         void eraseScore(point p, SDL_Plotter& g);
 
+        /*
+         description: sets the score of value n
+         return: void
+         precondition: int n is valid
+         postcondition: int n carries the current value of score
+         */
         void setNewScore(int n);
+    
+        /*
+         description: sets the number of lines cleared
+         return: void
+         precondition: int n is valid
+         postcondition: int n carries the current amount of lines cleared
+         */
         void setNewLineTotal(int n);
-        void resetLevel();
 };
 
 
