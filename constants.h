@@ -1,4 +1,13 @@
 /*
+ Authors: Luke Bryant, Bella Henslee, Samuel Choi, Raphe Prince
+ Assignment Title: Final Project - Tetris
+ Assignment Description: Create a Tetris Game
+ Due Date: 5/4/2023
+ Date Created: 4/15/2023
+ Date Modified: 5/4/2023
+ */
+
+/*
 This file holds all of the constants that are used throughout the project.
 It holds the dimensions of the Tetris board, the dimensions of the plotter
 window, the dimension of each tile, the starting location of each block,
