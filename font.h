@@ -1,4 +1,13 @@
- /*
+/*
+ Authors: Luke Bryant, Bella Henslee, Samuel Choi, Raphe Prince
+ Assignment Title: Final Project - Tetris
+ Assignment Description: Create a Tetris Game
+ Due Date: 5/4/2023
+ Date Created: 4/15/2023
+ Date Modified: 5/4/2023
+ */
+
+/*
 This file holds the declarations for both the letter and Font classes. We use these
 functions to open up each letter file, create the array for that letter,and display
 strings and characters to the display. We can change the size of the Font,the color of
