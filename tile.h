@@ -1,3 +1,12 @@
+/*
+ Authors: Luke Bryant, Bella Henslee, Samuel Choi, Raphe Prince
+ Assignment Title: Final Project - Tetris
+ Assignment Description: Create a Tetris Game
+ Due Date: 5/4/2023
+ Date Created: 4/15/2023
+ Date Modified: 5/4/2023
+ */
+
 #ifndef TILE_H_INCLUDED
 #define TILE_H_INCLUDED
 
