@@ -17,7 +17,6 @@ class Block{
     public:
         Block();
         tile tileArray[NUM_TILES];
-        Mix_Chunk * gameover = Mix_LoadWAV("gameover.wav");
 
         point getLocation() const;
         color getColor();
@@ -55,7 +54,6 @@ class Block{
         bool validPosition(tile board[][COL], int);
 
         bool checkForEndGame();
-
 };
 
 #endif // BLOCK_H_INCLUDED

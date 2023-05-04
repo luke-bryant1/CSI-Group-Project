@@ -103,7 +103,7 @@ void Tetris::grid(SDL_Plotter& g){
 
 void Tetris::drawRightBoard(SDL_Plotter& g){
     point p(COL * (TILE_SIZE + 1),0);
-    int currentScore = 0, currentLine  = 0, currentLevel = 0;
+    int currentScore = 0, currentLine  = 0, currentLevel = 1;
     string stringScore = "0", stringLines = "0", stringLevel = "1";
     stringstream ss;
     Font text;
@@ -190,14 +190,11 @@ bool Tetris::runTetris(SDL_Plotter& g){
     string stringScore = "0", stringLines = "0";
     stringstream ss;
 
-    text.setSize(4);
-
     point scoreNum  (300,150);
     point lineNum   (300,250);
     point levelNum  (300,350);
 
     g.initSound("clear.wav");
-    g.initSound("Tetris.mp3");
 
     while(!g.getQuit() && !gameOver){
         if(g.kbhit()){
@@ -232,6 +229,7 @@ bool Tetris::runTetris(SDL_Plotter& g){
                 }
             }
         }
+
         previousScore = currentScore;
         previousLine = currentLine;
         previousLevel = level;
@@ -241,7 +239,7 @@ bool Tetris::runTetris(SDL_Plotter& g){
         //this updates the score when you clear a line
         if(currentScore != previousScore){
             eraseScore(scoreNum, g);
-            drawScore(scoreNum, g, currentScore);
+            drawScore(scoreNum, g, currentScore,3);
 
             g.playSound("clear.wav");
         }
@@ -250,14 +248,13 @@ bool Tetris::runTetris(SDL_Plotter& g){
         //this updates number of lines you have cleared when you clear a line
         if(currentLine != previousLine){
             eraseScore(lineNum, g);
-            drawScore(lineNum, g, currentLine);
+            drawScore(lineNum, g, currentLine,3);
         }
-
 
         //this updates the level you are on every 6 lines you clear
         if(level != previousLevel){
             eraseScore(levelNum, g);
-            drawScore(levelNum, g, level);
+            drawScore(levelNum, g, level,3);
         }
 
         currentBlock.checkForTileBelow(board,ROW);
@@ -274,12 +271,12 @@ bool Tetris::runTetris(SDL_Plotter& g){
         updateBoard(g);
 
         if(currentBlock.checkForEndGame()){
+            drawScore(scoreNum, g, currentScore,3);
+            drawScore(lineNum, g, currentLine,3);
             eraseScore(scoreNum, g);
             eraseScore(lineNum, g);
-            setNewScore(0);
-            setNewLineTotal(0);
-            drawScore(scoreNum, g, currentScore);
-            drawScore(lineNum, g, currentLine);
+//            setNewScore(0);
+//            setNewLineTotal(0);
             gameOver = true;
         }
 
@@ -379,7 +376,7 @@ void Tetris::checkForFullRow(SDL_Plotter& g){
 void Tetris::endGame(SDL_Plotter& g){
     point p(0,0);
     Font text;
-    int currentScore = getScore(), currentLine  = getLine();
+    int currentScore, currentLine;
     string stringScore = "0", stringLines = "0";
     stringstream ss;
 
@@ -396,7 +393,6 @@ void Tetris::endGame(SDL_Plotter& g){
         }
         p.y+= TILE_SIZE;
     }
-
 
     int tetrisFontSize = 10;
     point gameloc (85, 140);
@@ -420,25 +416,23 @@ void Tetris::endGame(SDL_Plotter& g){
     text.draw("SCORE", g, CYAN);
 
     point scorenum (300, 460);
-    text.setLoc(scorenum);
-    ss.clear();
-    ss.str("");
-    ss << currentScore;
-    stringScore = ss.str();
-    text.draw(stringScore,g, CYAN);
+    currentScore = getScore();
+    drawScore(scorenum,g,currentScore,2);
 
     point lineword (180, 500);
     text.setLoc(lineword);
     text.draw("LINES", g, CYAN);
 
     point linenum (300, 500);
-    text.setLoc(linenum);
-    ss.clear();
-    ss.str("");
-    ss << currentLine;
-    stringLines = ss.str();
-    text.draw(stringLines,g, CYAN);
+    currentLine = getLine();
+    drawScore(linenum,g,currentLine,2);
 
+    point levelword (180, 540);
+    text.setLoc(levelword);
+    text.draw("LEVEL", g, CYAN);
+
+    point levelnum (300, 540);
+    drawScore(levelnum,g,level,2);
 }
 
 void Tetris::eraseScore(point p, SDL_Plotter& g){
@@ -458,11 +452,11 @@ void Tetris::eraseScore(point p, SDL_Plotter& g){
     }
 }
 
-void Tetris::drawScore(point p, SDL_Plotter& g, int currentNum){
+void Tetris::drawScore(point p, SDL_Plotter& g, int currentNum, int size){
     stringstream ss;
     string outputString;
     Font text;
-    text.setSize(4);
+    text.setSize(size);
 
     text.setLoc(p);
     ss.clear();

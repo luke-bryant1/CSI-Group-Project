@@ -50,7 +50,7 @@ class Tetris{
         int getScore();
         void endGame(SDL_Plotter& g);
 
-        void drawScore(point p, SDL_Plotter& g, int);
+        void drawScore(point p, SDL_Plotter& g, int, int size);
         void eraseScore(point p, SDL_Plotter& g);
 
         void setNewScore(int n);

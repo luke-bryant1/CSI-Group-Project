@@ -26,6 +26,8 @@ int main(int argc, char ** argv){
                     if(game.runTetris(g)){
                         game.endGame(g);
                         g.update();
+                        game.setNewScore(0);
+                        game.setNewLineTotal(0);
                     }
                 }
             }

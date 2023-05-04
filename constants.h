@@ -4,18 +4,25 @@
 const int COL = 10; //these are the number of cells for our board
 const int ROW = 25;
 
+//this is the number of tiles per block
 const int NUM_TILES     = 4;
+
+//this is the length of each tile
 const int TILE_SIZE     = 25;
+
+//this is the size of the display screen
 const int NUM_ROW = TILE_SIZE * ROW;
 const int NUM_COL = TILE_SIZE * COL * 2;
 
+//this is the starting location of every tile
 const int STARTING_X    = TILE_SIZE * 4;
-const int STARTING_Y    = TILE_SIZE - 100;
-
+const int STARTING_Y    = -2 * TILE_SIZE;
 const point START_POINT(STARTING_X, STARTING_Y);
 
-const int SPEED = 0; //This controls the speed that the block falls (the higher the number the slower)
+//this controls the refresh rate of the plotter
+const int SPEED = 0; //(it is set to zero to maximize the refresh rate)
 
+//this is where the color constants are set
 const color RED        = color(255, 0, 0);
 const color ORANGE     = color(255, 165, 0);
 const color YELLOW     = color(255, 255, 0);
@@ -29,9 +36,13 @@ const color BACKGROUND = color(127, 127, 127);
 const color ERASE      = color(255, 255, 255);
 const color NAVY       = color(32,42,68);
 
+//this is in place to make sure the size of the font doesn't get too big
 const int MAX_FONT_SIZE = 25;
 
+//these are all of the different types of blocks that are used
 enum blockType {bar, square, l_shape, l_shape_opp, t_shape, z_shape, z_shape_opp};
+
+//these are all of the different orientations the blocks can have when rotating
 enum direction {north, east, south, west};
 
 
