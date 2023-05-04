@@ -55,6 +55,7 @@ class Tetris{
 
         void setNewScore(int n);
         void setNewLineTotal(int n);
+        void resetLevel();
 };
 
 

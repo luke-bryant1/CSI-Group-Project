@@ -28,6 +28,7 @@ int main(int argc, char ** argv){
                         g.update();
                         game.setNewScore(0);
                         game.setNewLineTotal(0);
+                        game.resetLevel();
                     }
                 }
             }

@@ -150,34 +150,20 @@ void Tetris::drawRightBoard(SDL_Plotter& g){
     text.setLoc(scoreWord);
     text.setSize(3);
     text.draw("SCORE", g, CYAN);
-    text.setLoc(scoreNum);
-    ss.clear();
-    ss.str("");
-    ss << currentScore;
-    stringScore = ss.str();
-    text.draw(stringScore,g, CYAN);
+    drawScore(scoreNum, g, currentScore,3);
 
     //print lines as 0
     text.setLoc(lineWord);
     text.setSize(3);
     text.draw("LINES", g, YELLOW);
-    text.setLoc(lineNum);
-    ss.clear();
-    ss.str("");
-    ss << currentLine;
-    stringLines = ss.str();
-    text.draw(stringLines,g, YELLOW);
+    drawScore(lineNum, g, currentLine,3);
 
     //draw level as 0
     text.setLoc(levelWord);
     text.setSize(3);
     text.draw("LEVEL", g, YELLOW);
-    text.setLoc(levelNum);
-    ss.clear();
-    ss.str("");
-    ss << currentLevel;
-    stringLevel = ss.str();
-    text.draw(stringLevel,g, YELLOW);
+    drawScore(levelNum, g, currentLevel,3);
+
 }
 
 bool Tetris::runTetris(SDL_Plotter& g){
@@ -200,7 +186,7 @@ bool Tetris::runTetris(SDL_Plotter& g){
         if(g.kbhit()){
             while(key = g.getKey()){
                 switch(key){
-                    //this does stuff when you hit a key
+                    //this moves the tile when you hit a key
                     case RIGHT_ARROW:
                         if(!currentBlock.checkForTileRight(board,ROW)){
                             currentBlock.moveRight();
@@ -240,7 +226,6 @@ bool Tetris::runTetris(SDL_Plotter& g){
         if(currentScore != previousScore){
             eraseScore(scoreNum, g);
             drawScore(scoreNum, g, currentScore,3);
-
             g.playSound("clear.wav");
         }
         currentLine = getLine();
@@ -275,8 +260,6 @@ bool Tetris::runTetris(SDL_Plotter& g){
             drawScore(lineNum, g, currentLine,3);
             eraseScore(scoreNum, g);
             eraseScore(lineNum, g);
-//            setNewScore(0);
-//            setNewLineTotal(0);
             gameOver = true;
         }
 
@@ -470,4 +453,8 @@ void Tetris::setNewScore(int n){
 }
 void Tetris::setNewLineTotal(int n){
     line = n;
+}
+
+void Tetris::resetLevel(){
+    level = 1;
 }
