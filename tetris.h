@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "tile.h"
 #include "block.h"
+#include "font.h"
 #include <ctime>
 #include <stdlib.h>
 #include <string>
@@ -13,9 +14,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "font.h"
 using namespace std;
-
 
 class Tetris{
     private:
@@ -24,15 +23,14 @@ class Tetris{
         int score = 0;
 
     public:
+        int level = 1;
         tile board[ROW][COL];
         tile rightBoard[ROW][COL];
         tile fullScreen[ROW][COL*2];
         Block currentBlock;
-        Mix_Chunk * sound = Mix_LoadWAV("clear.wav");
 
         void startScreen(SDL_Plotter& g);
         void eraseStartScreen(SDL_Plotter& g);
-
 
         void setBoard(SDL_Plotter& g);
         void grid(SDL_Plotter& g);
@@ -51,6 +49,12 @@ class Tetris{
         void setScore(int);
         int getScore();
         void endGame(SDL_Plotter& g);
+
+        void drawScore(point p, SDL_Plotter& g, int);
+        void eraseScore(point p, SDL_Plotter& g);
+
+        void setNewScore(int n);
+        void setNewLineTotal(int n);
 };
 
 

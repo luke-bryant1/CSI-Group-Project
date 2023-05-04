@@ -7,10 +7,12 @@ Block::Block(){
     isCurrentlyMoving = true;
     orientation = east;
 
+    type = square;
+    setColor(YELLOW);
+    setBorderColor(BACKGROUND);
+
     loc.x = STARTING_X;
     loc.y = STARTING_Y;
-
-    setRandType();
 }
 
 void Block::moveLeft(){
@@ -44,10 +46,10 @@ void Block::moveDown(){
     }
 }
 
-void Block::move(){
+void Block::move(int level){
     static int count = 0;
     count++;
-    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 20){
+    if(getLocation().y <= NUM_ROW - TILE_SIZE && count > 100/level){
         count = 0;
         point p = getLocation();
         p.y += TILE_SIZE;

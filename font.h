@@ -40,9 +40,6 @@ class Font{
 
         void draw(string, SDL_Plotter& g, color = BLACK);
 
-
-
-
 };
 
 #endif // FONT_H_INCLUDED

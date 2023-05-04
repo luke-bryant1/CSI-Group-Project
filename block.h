@@ -44,7 +44,7 @@ class Block{
         void startMoving();
 
         void draw(SDL_Plotter& g);
-        void move();
+        void move(int);
         void moveLeft();
         void moveRight();
         void moveDown();
