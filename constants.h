@@ -1,8 +1,15 @@
+/*
+This file holds all of the constants that are used throughout the project.
+It holds the dimensions of the Tetris board, the dimensions of the plotter
+window, the dimension of each tile, the starting location of each block,
+and the different colors used throughout the project.
+*/
+
 #ifndef CONSTANTS_H_INCLUDED
 #define CONSTANTS_H_INCLUDED
 
-const int COL = 10; //these are the number of cells for our board
-const int ROW = 25;
+const int COL = 10; //this is the number of columns on the Tetris board
+const int ROW = 25; //this is the number of rows on the Tetris board
 
 //this is the number of tiles per block
 const int NUM_TILES     = 4;
