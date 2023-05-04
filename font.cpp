@@ -60,14 +60,14 @@ Font::Font(){
     //open the files and initialize the letters
     string fname;
     for(char c = 'A'; c <= 'Z'; c++){
-        fname = "font\\";
+        fname = "";
         fname += c;
         fname += ".txt";
         data[c].init(fname);
     }
     //do the same for the each number
     for(char c = '0'; c <= '9'; c++){
-        fname = "font\\";
+        fname = "";
         fname += c;
         fname += ".txt";
         data[c].init(fname);

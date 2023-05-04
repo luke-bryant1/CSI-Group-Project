@@ -156,7 +156,7 @@ class Tetris{
          precondition: SDL_Plotter, point location, and the score value is valid
          postcondition: draws the score on the right side of the screen
          */
-        void drawScore(point p, SDL_Plotter& g, int);
+        void drawScore(point p, SDL_Plotter& g, int, int size);
     
         /*
          description: draws a background color tile on top of the score
@@ -181,6 +181,14 @@ class Tetris{
          postcondition: int n carries the current amount of lines cleared
          */
         void setNewLineTotal(int n);
+    
+        /*
+         description: resets level 1
+         return: void
+         precondition: function is called
+         postcondition: resets level back to 1 after end game
+         */
+        void resetLevel();
 };
 
 

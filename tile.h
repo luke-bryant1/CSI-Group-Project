@@ -27,7 +27,6 @@ class tile{
          * return: none
          * precondition: none
          * postcondition: constructs the tile with size 25
-         *
         */
         tile(){
             size = TILE_SIZE;
@@ -38,7 +37,6 @@ class tile{
          * return: point location of the tile
          * precondition: tile exists with a location
          * postcondition: location is returned
-         *
         */
         point getLocation() const;
 
@@ -47,7 +45,6 @@ class tile{
          * return: color of the tile
          * precondition: tile exists with a color
          * postcondition: color is returned
-         *
         */
         color getColor() const;
 
@@ -56,7 +53,6 @@ class tile{
          * return: border color of the tile
          * precondition: tile exists with a border color
          * postcondition: border color is returned
-         *
         */
         color getBorderColor();
 
@@ -65,7 +61,6 @@ class tile{
          * return: int size of the tile
          * precondition: tile exists with a size
          * postcondition: size is returned
-         *
         */
         int getSize() const;
 
@@ -74,7 +69,6 @@ class tile{
          * return: void
          * precondition: parameter color to be set as border color
          * postcondition: border color is set
-         *
         */
         void setBorderColor(color);
 
@@ -84,7 +78,6 @@ class tile{
          * return: void
          * precondition: parameter point to set location to
          * postcondition: location is set
-         *
         */
         void setLocation(const point&);
 
@@ -93,7 +86,6 @@ class tile{
          * return: void
          * precondition: parameter color to be set as tile color
          * postcondition: tile color is set
-         *
         */
         void setColor(const color&);
 
@@ -102,7 +94,6 @@ class tile{
          * return: void
          * precondition: parameter int to set size to
          * postcondition: tile size is set
-         *
         */
         void setSize(int);
 
@@ -111,7 +102,6 @@ class tile{
          * return: void
          * precondition: SDL plotter is valid
          * postcondition: plotter is updated
-         *
         */
         void update(SDL_Plotter& g);
 
@@ -122,7 +112,6 @@ class tile{
                         as current tile, string direction to be checked, left,
                         right, or down
          * postcondition: determined if tiles are touching
-         *
         */
         bool isTouching(tile&, string);
 
@@ -131,7 +120,6 @@ class tile{
          * return: boolean onTheMove, returns true if tile is moving
          * precondition: tile exists with bool onTheMove
          * postcondition: onTheMove is returned
-         *
         */
         bool isOnTheMove();
 
@@ -140,7 +128,6 @@ class tile{
          * return: void
          * precondition: tile exists with bool onTheMove
          * postcondition: onTheMove is now false
-         *
         */
         void stopMoving();
 
@@ -149,7 +136,6 @@ class tile{
          * return: void
          * precondition: tile exists with bool onTheMove
          * postcondition: onTheMove is now true
-         *
         */
         void startMoving();
 
@@ -159,7 +145,6 @@ class tile{
          * precondition: tile exists with bool isOnScreen,
                         parameter boolean to set isOnScreen
          * postcondition: isOnScreen is now set
-         *
         */
         void setIsOnScreen(bool);
 
@@ -168,7 +153,6 @@ class tile{
          * return: boolean isOnScreen, returns true if tile is on screen
          * precondition: tile exists with bool isOnScreen
          * postcondition: isOnScreen is returned
-         *
         */
         bool getIsOnScreen();
 
@@ -177,7 +161,6 @@ class tile{
          * return: void
          * precondition: SDL Plotter is valid
          * postcondition: navy pixels are plotted on screen to cover
-         *
         */
         void erase(SDL_Plotter& g);
 
@@ -186,7 +169,6 @@ class tile{
          * return: void
          * precondition: SDL Plotter is valid
          * postcondition: pixels are plotted on screen to form tile
-         *
         */
         void draw(SDL_Plotter& g);
 

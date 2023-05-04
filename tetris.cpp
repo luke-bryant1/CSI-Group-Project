@@ -164,13 +164,13 @@ void Tetris::drawRightBoard(SDL_Plotter& g){
     //print lines as 0
     text.setLoc(lineWord);
     text.setSize(3);
-    text.draw("LINES", g, YELLOW);
+    text.draw("LINES", g, CYAN);
     drawScore(lineNum, g, currentLine,3);
 
     //draw level as 0
     text.setLoc(levelWord);
     text.setSize(3);
-    text.draw("LEVEL", g, YELLOW);
+    text.draw("LEVEL", g, CYAN);
     drawScore(levelNum, g, currentLevel,3);
 
 }
