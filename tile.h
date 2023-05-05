@@ -5,6 +5,12 @@
  Due Date: 5/4/2023
  Date Created: 4/15/2023
  Date Modified: 5/4/2023
+
+ This file contains the declaration for the tile object along with it's various
+ functions. We use a compilation of tiles to create the board and to create
+ blocks. Each tile has a location, color, border color, size, and two booleans
+ returning whether or not the tile is moving and whether or not it is on the board
+ or not.
  */
 
 #ifndef TILE_H_INCLUDED

@@ -10,6 +10,8 @@
 #include "tetris.h"
 
 void Tetris::startScreen(SDL_Plotter& g){
+    // We are unsure why, but this Tetris.mp3 music file
+    // only plays on certain machines.
     g.initSound("Tetris.mp3");
     g.playSound("Tetris.mp3");
     point p(0,0);

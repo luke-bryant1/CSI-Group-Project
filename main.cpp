@@ -5,30 +5,28 @@
  Due Date: 5/4/2023
  Date Created: 4/15/2023
  Date Modified: 5/4/2023
- */
 
-/*
 Group Work Distribution:
-Luke: 
+Luke:
  - Created Plotter Window, Board, Tiles, and Blocks
  - Helped developed collisions, clearing row
  - Debugged (General)
  - Commented Code (General)
 
-Bella: 
+Bella:
  - Helped developed collisions, clearing row
  - Displayed text on screen
  - Displayed start game screen
  - Debugged (General)
  - Commented Code (General)
 
-Samuel: 
+Samuel:
  - Created score, lines, and level
  - Created end game screen
  - Helped developed collisions, clearing row
  - Debugged (General)
  - Commented Code (General)
- 
+
 Raphe:
  - Helped developed collisions, clearing row
  - Wrote the font for all of the numbers and letters used
@@ -58,7 +56,6 @@ int main(int argc, char ** argv){
         game.startScreen(g);
         g.update();
         while(!g.getQuit()){
-
             if(g.kbhit()){
                 key = g.getKey();
                 if(key == ' '){

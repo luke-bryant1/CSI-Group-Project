@@ -16,6 +16,9 @@ Block::Block(){
     isCurrentlyMoving = true;
     orientation = east;
 
+    // we decided to set the very first block of the game to be a yellow
+    // square because we all agreed that we don't like to get the z-block
+    // as our starting block
     type = square;
     setColor(YELLOW);
     setBorderColor(BACKGROUND);
@@ -767,4 +770,3 @@ bool Block::checkForEndGame(){
     }
     return isEndGame;
 }
-

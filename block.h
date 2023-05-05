@@ -1,3 +1,17 @@
+/*
+ Authors: Luke Bryant, Bella Henslee, Samuel Choi, Raphe Prince
+ Assignment Title: Final Project - Tetris
+ Assignment Description: Create a Tetris Game
+ Due Date: 5/4/2023
+ Date Created: 4/15/2023
+ Date Modified: 5/4/2023
+
+ This file contains the declaration for the block object along with it's various
+ functions. We use a compilation of four tiles to create each block. Each block
+ has a location, color, border color, size, and a boolean returning whether or
+ not the tile is moving.
+ */
+
 #ifndef BLOCK_H_INCLUDED
 #define BLOCK_H_INCLUDED
 
@@ -196,7 +210,7 @@ class Block{
         Post-condition: Block is moved
         Returns: Void
         */
-        void move();
+        void move(int);
 
 
         /*
